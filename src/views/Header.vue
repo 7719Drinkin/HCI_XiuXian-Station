@@ -1,27 +1,63 @@
 <template>
-    <div class="['header', {'scrolled': isScrolled }]">
-      <div class="logo">
-        <router-link class="nav-item" to="/home">
-          <span class="gradient-text">凡人修仙传</span>
-        </router-link>
+    <div :class="['header', {scrolled: isScrolled}]">
+      <div class="header-container">
+        <div class="logo">
+          <router-link :class="['nav-item', {scrolled: isScrolled}]" to="/home">
+            <span :class="['gradient-text', {scrolled: isScrolled }]">凡人修仙传</span>
+          </router-link>
+        </div>
+        <!--中间导航栏部分-->
+        <nav class='nav-links'>
+          <router-link to="/home" :class="['nav-item', {scrolled: isScrolled }]">首页</router-link>
+          <router-link to="/synopsis" :class="['nav-item', {scrolled: isScrolled }]">故事梗概</router-link>
+          <router-link to="/original" :class="['nav-item', {scrolled: isScrolled }]">原作导航</router-link>
+          <router-link to="/information" :class="['nav-item', {scrolled: isScrolled }]">信息百科</router-link>
+          <router-link to="/resource" :class="['nav-item', {scrolled: isScrolled }]">资源</router-link>
+        </nav>
+        <!--右侧按钮 -->
+        <div class="function-buttons">
+          <button class="func-btn" @click="theme.toggle()">{{ theme.isDarkMode ? '🌞' : '🌙' }}</button>
+          <button class="func-btn">🔍</button>
+          <button class="func-btn">👤</button>
+          <button class="func-btn">🧭</button>
+        </div>
+        <!-- 右上角展开按钮 -->
+        <button class="sidebar-toggle-btn" @click="sidebar.toggle">☰</button>
+        <!-- 右侧栏 -->
+        <transition name="sidebar-fade">
+          <div v-if="sidebar.isOpen" class="sidebar">
+            <router-link to="/home" class="nav-item" @click="sidebar.close">首页</router-link>
+            <router-link to="/synopsis" class="nav-item" @click="sidebar.close">故事梗概</router-link>
+            <router-link to="/original" class="nav-item" @click="sidebar.close">原作导航</router-link>
+            <router-link to="/information" class="nav-item" @click="sidebar.close">信息百科</router-link>
+            <router-link to="/resource" class="nav-item" @click="sidebar.close">资源</router-link>
+          </div>
+        </transition>
       </div>
-      <nav class='nav-links'>
-        <router-link to="/home" class="nav-item">首页</router-link>
-        <router-link to="/synopsis" class="nav-item">故事梗概</router-link>
-        <router-link to="/original" class="nav-item">原作导航</router-link>
-        <router-link to="/information" class="nav-item">信息百科</router-link>
-        <router-link to="/resource" class="nav-item">资源</router-link>
-      </nav>
     </div>
+    
 
 
 </template>
 
+
+<script setup>
+
+import { useSidebarStore } from '../store/sidebar'
+import { useThemeStore } from '../store/theme'
+
+const sidebar = useSidebarStore()
+const theme = useThemeStore()
+
+</script>
+
 <script>
+
 export default {
   data() {
     return {
-      isScrolled: false
+      isScrolled: false,
+
     };
   },
   mounted() {
@@ -33,46 +69,55 @@ export default {
   methods: {
     handleScroll() {
       this.isScrolled = window.scrollY > 0;
-    }
-  }
+    },
+  },
 }
+
 </script>
 
 <style scoped> 
   /* 导航栏 */
 :root {
   --light-color: rgba(255, 255, 255, 0.7);
-  --dark-color: #333;
+  --dark-color: #1f1f1f;
   --bg-transparent: transparent;
   --bg-white: #ffffff;
   --hover-bg-color: #ac97f7;
 }
 
 .header {
-    width: 100%;
-    height: 60px;
-    background: var(--bg-transparent);;
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 0 2rem;
-    transition: background 0.3s, box-shadow 0.3s
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--bg-transparent);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
 .header.scrolled {
-  background: var(--bg-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 2px 4px rgb(255, 255, 255);
 }
 
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+
 .logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
+  flex-shrink: 0;
+  margin-right: 1rem;
 }
 
 .logo-link {
@@ -83,6 +128,7 @@ export default {
     opacity: 0.8;
     transition: opacity 0.3s;
     background: #ac97f7;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .gradient-text {
@@ -90,17 +136,32 @@ export default {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   text-decoration: none;
-  
 }
 
+.header.scrolled .gradient-text {
+  background: none;
+  color: var(--dark-color);
+}
+
+.header.scrolled .gradient-text:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    background: #ac97f7;
+    color: rgba(255, 255, 255, 0.7);
+}
 
 .nav-links {
-    display: flex;
-    gap: 2rem;
-    margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-shrink: 1;      /* 可以缩小 */
+  flex-grow: 1;        /* 不要自动撑开 */
+  flex-wrap: nowrap;   /* 不要换行 */
+  max-width: 50%;      /* 不允许过宽，防止压右边 */
+  overflow: hidden;    /* 防止溢出 */
 }
 
 .nav-item {
@@ -110,13 +171,145 @@ export default {
     text-decoration: none;
     padding: 12px 18px;
     border-radius: 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
     transition: all 0.3s;
     animation: 1.5s linear 1s 1 normal both running show;
 }
 
+/* 滚动时背景变白，文字应变为深色 */
+.header.scrolled .nav-item {
+  color: var(--dark-color);
+}
+
 .nav-item:hover {
     background: #ac97f7;
+    color: rgba(206, 255, 235, 0.7);
 }
+
+/* 滚动时背景变白，将鼠标放上后字体变回浅色*/
+.header.scrolled .nav-item:hover {
+  background: #ac97f7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.function-buttons {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.func-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* 滚动后按钮颜色变深 */
+.header.scrolled .func-btn {
+  color: var(--dark-color);
+}
+
+/* 悬停时统一背景色和文字亮度 */
+.func-btn:hover,
+.header.scrolled .func-btn:hover {
+  background: #ac97f7;
+  color: white;
+}
+
+.sidebar-toggle-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: all 0.3s;
+}
+
+.header.scrolled .sidebar-toggle-btn{
+  color: var(--dark-color);
+}
+
+.sidebar-toggle-btn:hover,
+.header.scrolled .sidebar-toggle-btn:hover{
+  background: #ac97f7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px; /* 紧贴导航栏底部 */
+  right: 1rem;
+  background: var(--bg-transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 1rem;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.3s;
+  min-width: 150px;
+  max-width: 220px;
+}
+
+.header.scrolled .sidebar{
+  background: #ffffff;
+}
+
+
+body.dark-mode .header.scrolled .sidebar {
+  background-color: #1f1f1f;
+  color: white;
+}
+
+/* Sidebar 中按钮继承 nav-item 样式 */
+.sidebar .nav-item {
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.sidebar .nav-item:hover {
+  background: #ac97f7;
+  color: white;
+}
+
+/* 展开动画过渡定义 */
+.sidebar-fade-enter-active,
+.sidebar-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.sidebar-fade-enter-from,
+.sidebar-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.sidebar-fade-enter-to,
+.sidebar-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 
 @media (max-width: 768px) {
   .nav-links {
@@ -124,5 +317,7 @@ export default {
   }
 /* 可以添加汉堡菜单按钮 */
 }
+
+
 
 </style>

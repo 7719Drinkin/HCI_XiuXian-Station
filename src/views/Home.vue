@@ -2,26 +2,66 @@
     <div id="web-bg"></div>
     <!-- 可以添加更多内容 -->
     <div class="content">
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <h1>欢迎来到凡人修仙传</h1>
-        <p>这里是一个关于凡人修仙传的精彩世界。</p>
-        <p>探索故事梗概、原作导航、信息百科和资源。</p>
-        <p>点击上方导航栏开始你的修仙之旅！</p>
-    </div>
+      <!-- 动态文字 -->
+      <h1 class="typing">{{ currentText }}<span class="cursor">|</span></h1>
+      <!--分隔-->
+      <div class="glass-divider"></div>
+      <div class="section-divider"></div>
+      <!-- 主页面部分 -->
 
+      <!-- 首页轮播卡片组件 -->
+      <CarouselCards />
+
+    </div>
 </template>
 
-<script>
-export default {
 
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const texts = [
+  '欢迎来到凡人修仙传',
+  '探索修仙世界，踏上长生之路',
+  '从凡人到仙人，只差一步',
+]
+
+const currentText = ref('')
+let currentIndex = 0
+let charIndex = 0
+let isDeleting = false
+
+function typeEffect() {
+  const fullText = texts[currentIndex]
+
+  if (isDeleting) {
+    currentText.value = fullText.substring(0, charIndex--)
+  } else {
+    currentText.value = fullText.substring(0, charIndex++)
+  }
+
+  if (!isDeleting && charIndex === fullText.length) {
+    setTimeout(() => isDeleting = true, 1500)
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false
+    currentIndex = (currentIndex + 1) % texts.length
+  }
+
+  setTimeout(typeEffect, isDeleting ? 50 : 120)
+}
+
+onMounted(() => {
+  typeEffect()
+})
+</script>
+
+
+<script>
+import CarouselCards from '@/components/CarouselCards.vue'
+
+export default {
+  components:{
+    CarouselCards,
+  }
 }
 </script>
 
@@ -67,6 +107,28 @@ p {
     animation: fadeIn 1s ease-in-out;
 }
 
+/*打字动画 */
+.typing {
+  font-size: 2.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  margin-top: 20rem;
+  margin-bottom: 20rem;
+}
+
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 0.8s infinite;
+  color: #00ffff;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 
 /* 动画定义 */
 @keyframes blur-to-clear {
@@ -100,4 +162,17 @@ p {
   }
 }
 
+.glass-divider {
+  height: 80px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+}
+
+.section-divider {
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9));
+}
 </style>

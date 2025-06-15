@@ -10,6 +10,10 @@ const Resource = () => import('@/views/Resource.vue')
 
 const routes = [
   {
+    path: '/',         // 根路径
+    redirect: '/home'  // 自动重定向到 /home
+  },
+  {
     path: '/home',
     name: 'Home',
     component: Home
