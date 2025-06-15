@@ -35,7 +35,7 @@ export default {
     height: 100%;
     background-color: #0c2138; /* 备用背景色 */;
     filter: blur(1px);
-    background-image: url('C:/Users/Drink/Desktop/Assignments/HCI/WebProject/HCI_finalpro/src/assets/web-bg1.png'); /* 替换为你的背景图片 */
+    background-image: url('../assets/web-bg1.png'); /* 替换为你的背景图片 */
     background-size: cover;
     background-position: center;
     z-index: -1;
