@@ -1,4 +1,5 @@
 <template>
+  <div id="web-bg"></div>
   <h1>Original</h1>
 </template>
 
