@@ -1,4 +1,5 @@
 <template>
+  <div id="web-bg"></div>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <div class="container">
     <div class="recommendation-grid">
@@ -601,7 +602,7 @@ export default {
   .section-title {
       font-family: 'Ma Shan Zheng', cursive;
       font-size: 2.8rem;
-      color: #0c0c17;
+      color: #ffffff;
       position: relative;
       padding-left: 1.5rem;
   }
@@ -620,7 +621,7 @@ export default {
 
   .section-subtitle {
       font-size: 1.3rem;
-      color: #4a4a4a;
+      color: #ffffff;
       max-width: 700px;
       margin: -2rem auto 4rem;
       text-align: center;
@@ -636,7 +637,7 @@ export default {
   }
 
   .scene-card {
-      background: var(--card-bg);
+      background: rgb(255, 255, 255);
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       overflow: hidden;
@@ -711,7 +712,7 @@ export default {
   }
 
   .video-card {
-      background: var(--card-bg);
+      background: white;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -798,7 +799,7 @@ export default {
   }
 
   .music-card {
-      background: var(--card-bg);
+      background: white;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);

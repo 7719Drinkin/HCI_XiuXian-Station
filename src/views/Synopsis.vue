@@ -1,8 +1,9 @@
 <template>
+  <div id="web-bg"></div>
   <div class="container">
     <!-- 头部 -->
-    <header class="fade-in" style="background-image: url('https://ts1.tc.mm.bing.net/th/id/R-C.1aa2280113230fcc12ae7d634a7f4fcd?rik=qz4UwjiA6GIPJw&riu=http%3a%2f%2fn.sinaimg.cn%2fsinakd10012%2f200%2fw1080h720%2f20200624%2fac21-ivmqpci3628770.jpg&ehk=w89GUiU%2frL6aCWiM%2f7qb55RXMQPKxJbzpcSR%2besCmOQ%3d&risl=&pid=ImgRaw&r=0');">
-      <div class="logo">修仙之路，凡人亦可成仙</div>
+    <header class="fade-in">
+      <p class="logo">修仙之路，凡人亦可成仙</p>
     </header>
     <!-- 内容梗概 -->
     <section class="content-section fade-in delay-1">
@@ -252,7 +253,7 @@ body::before {
 
 /* 头部样式 */
 header {
-  height: 650px;
+  height: 180px;
   padding: 30px 0;
   text-align: center;
   position: relative;
@@ -265,7 +266,7 @@ header {
 .logo {
   font-size: 4rem;
   font-weight: 700;
-  color: #333;
+  color: #ffffff;
   letter-spacing: 5px;
   text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -392,7 +393,7 @@ nav {
 }
 
 .nav-btn {
-  background: rgba(26, 26, 46, 0.7);
+  background: rgba(255, 255, 255, 0.7);
   color: var(--text-color);
   border: 1px solid var(--accent-color);
   padding: 0.8rem 1.5rem;
@@ -404,7 +405,7 @@ nav {
 }
 
 .nav-btn:hover, .nav-btn.active {
-  background: var(--accent-color);
+  background: rgb(116, 116, 116);
   color: var(--primary-color);
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
@@ -412,7 +413,7 @@ nav {
 
 /* 故事梗概区域 - 白色背景 */
 .story-container {
-  background: var(--card-bg);
+  background: white;
   border-radius: 10px;
   padding: 2.5rem;
   box-shadow: var(--card-shadow);
