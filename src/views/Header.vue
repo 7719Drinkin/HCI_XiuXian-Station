@@ -1,3 +1,4 @@
+<!--Header.vue-->
 <template>
     <div :class="['header', {scrolled: isScrolled}]">
       <div class="header-container">
@@ -17,7 +18,7 @@
         <!--右侧按钮 -->
         <div class="function-buttons">
           <button class="func-btn" @click="theme.toggle()">{{ theme.isDarkMode ? '🌞' : '🌙' }}</button>
-          <button class="func-btn">🔍</button>
+          <button class="func-btn fab fa-github github-icon" @click="goToGithub"></button>
           <button class="func-btn">👤</button>
           <button class="func-btn">🧭</button>
         </div>
@@ -48,6 +49,10 @@ import { useThemeStore } from '../store/theme'
 
 const sidebar = useSidebarStore()
 const theme = useThemeStore()
+
+function goToGithub() {
+  window.open('https://github.com/7719Drinkin/HCI_Project', '_blank')
+}
 
 </script>
 

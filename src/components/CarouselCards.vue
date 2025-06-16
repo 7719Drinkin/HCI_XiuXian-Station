@@ -1,3 +1,4 @@
+<!--CarouselCard.vue-->
 <template>
   <div class="carousel-wrapper">
     <div class="carousel-track" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
@@ -27,7 +28,7 @@ const cards = [
   {
     title: '韩立初入修仙界',
     desc: '凡人少年踏上逆天修仙路',
-    image: new URL('@/assets/card1.jpg', import.meta.url).href,
+    image: new URL('@/assets/web-bg1.png', import.meta.url).href,
     route: '/intro'
   },
   {
@@ -59,9 +60,9 @@ const nextCard = () => {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 960px;
-  margin: 3rem auto;
+  max-width: 1080px;
   border-radius: 16px;
+  background: #c9c9c9;
 }
 
 .carousel-track {
@@ -90,20 +91,28 @@ const nextCard = () => {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.5rem 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 80%);
   color: #fff;
   font-family: 'Helvetica Neue', sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平居中内容 */
+  justify-content: center;
+  text-align: center;
 }
 
 .card-title {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  font-weight: bold;
   margin-bottom: 0.3rem;
 }
 
 .card-subtitle {
-  font-size: 1rem;
+  font-size: 1.1rem;
   opacity: 0.85;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
 /* 导航按钮 */
@@ -111,18 +120,20 @@ const nextCard = () => {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(240, 240, 240, 0.9);
+  background: transparent;
+  color: rgb(161, 160, 160);
   border: none;
   font-size: 2rem;
   padding: 0.3rem 0.8rem;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 10%;
   z-index: 5;
   transition: background 0.3s ease;
 }
 
 .nav-btn:hover {
-  background: white;
+  background: rgb(162, 162, 162);
+  color: rgb(50, 50, 50);
 }
 
 .nav-btn.left {
