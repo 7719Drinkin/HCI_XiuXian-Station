@@ -12,8 +12,18 @@
           <router-link to="/home" :class="['nav-item', {scrolled: isScrolled }]">首页</router-link>
           <router-link to="/synopsis" :class="['nav-item', {scrolled: isScrolled }]">故事梗概</router-link>
           <router-link to="/original" :class="['nav-item', {scrolled: isScrolled }]">原作导航</router-link>
-          <div class="nav-item info-nav-wrapper" :class="{scrolled: isScrolled}" @mouseenter="showInfoSubnav = true" @mouseleave="showInfoSubnav = false">
-            <router-link to="/information" class="info-nav-link">信息百科</router-link>
+          <div 
+            class="nav-item info-nav-wrapper" 
+            :class="{scrolled: isScrolled}"
+            @mouseenter="showInfoSubnav = true" 
+            @mouseleave="showInfoSubnav = false"
+            style="display: flex; align-items: center; height: 100%; position: relative; padding: 0;"
+          >
+            <router-link 
+              to="/information" 
+              :class="['nav-item', {scrolled: isScrolled}]"
+              style="padding: 12px 18px; border-radius: 24px; font-size: 1.2rem; font-weight: bold; background: none; display: flex; align-items: center; height: 100%;"
+            >信息百科</router-link>
             <transition name="fade">
               <div v-if="showInfoSubnav" class="info-subnav" @mouseenter="showInfoSubnav = true" @mouseleave="showInfoSubnav = false">
                 <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'character' } }">人物</router-link>
@@ -52,7 +62,7 @@
 
 
 <script setup>
-
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useSidebarStore } from '../store/sidebar'
 import { useThemeStore } from '../store/theme'
 
@@ -63,30 +73,18 @@ function goToGithub() {
   window.open('https://github.com/7719Drinkin/HCI_Project', '_blank')
 }
 
-</script>
+const isScrolled = ref(false)
+const showInfoSubnav = ref(false)
 
-<script>
-
-export default {
-  data() {
-    return {
-      isScrolled: false,
-      showInfoSubnav: false,
-    };
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      this.isScrolled = window.scrollY > 0;
-    },
-  },
+function handleScroll() {
+  isScrolled.value = window.scrollY > 0
 }
-
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped> 
@@ -175,7 +173,7 @@ export default {
   flex-grow: 1;        /* 不要自动撑开 */
   flex-wrap: nowrap;   /* 不要换行 */
   max-width: 50%;      /* 不允许过宽，防止压右边 */
-  overflow: hidden;    /* 防止溢出 */
+  overflow: visible;    /* 防止溢出 */
 }
 
 .nav-item {
@@ -334,31 +332,36 @@ body.dark-mode .header.scrolled .sidebar {
 
 
 .info-nav-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
   position: relative;
-  display: inline-block;
+  padding: 0;
 }
 .info-subnav {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px); /* 下移10px，产生间隔 */
   left: 0;
-  background: white;
+  background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  border-radius: 8px;
+  border-radius: 24px;
   min-width: 120px;
-  z-index: 2000;
-  padding: 0.5rem 0;
+  z-index: 3000;
+  padding: 0.5rem 0.8rem;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-direction: row; /* 横向排列 */
+  align-items: center;
+  gap: 16px;
 }
 .info-subnav .subnav-item {
   color: #333;
   padding: 8px 20px;
-  text-align: left;
+  text-align: center;
   font-size: 1rem;
-  border-radius: 4px;
+  border-radius: 24px;
   transition: background 0.2s;
   text-decoration: none;
+  white-space: nowrap;
 }
 .info-subnav .subnav-item:hover {
   background: #ac97f7;
