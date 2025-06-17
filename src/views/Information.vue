@@ -61,34 +61,61 @@ const characters = ref([
     name: '韩立',
     avatar: '/src/images/韩立头像.png',
     images: ['/src/images/韩立.png', '/src/images/韩立2.png'],
+    realm: '目前结单后期',
+    realmLong: '在动画中，韩立目前的修为境界为结单后期，正准备结婴。',
+    experience: '青元剑芒、巨剑术、雷遁术等',
+    experienceLong: '韩立擅长的神通种类繁多，如青元剑芒、巨剑术、雷遁术等，战斗经验丰富，善于应对各种危机。',
     desc: '本作主角，天南胥国境州青牛镇五里沟人氏...',
+    backgroundLong: '韩立，天南越国镜州青牛镇五里沟人氏，小名二愣子，相貌普通，皮肤黝黑，家中排行老四。童年被三叔介绍到七玄门，因身具灵根可修炼长春功而被墨大夫收为弟子，后来凭借升仙令加入越国七大仙派之一的黄枫谷，正式踏上修仙之路。',
+    artifacts: '掌天瓶、青云剑、鬼罗幡等',
+    artifactsLong: '韩立拥有多件法宝，如掌天瓶、青云剑、鬼罗幡等，这些法宝在战斗中发挥了重要作用。',
+    skills: '大衍诀、长春功、三转重元功等',
+    skillsLong: '韩立擅长多种功法，如大衍诀、长春功、三砖重元功等，战斗技巧高超。',
     cv: '钱文青'
   },
   {
     name: '南宫婉',
     avatar: '/src/images/南宫碗头像.png',
-    images: ['/src/images/2.png', '/src/images/3.png'],
-    desc: '温婉聪慧，韩立的红颜知己，修为高深。',
-    cv: '小N'
+    images: ['/src/images/南宫碗1.png', '/src/images/南宫碗2.png'],
+    realm: '结单中期',
+    realmLong: '南宫婉目前的修为境界为结单中期。',
+    experience: '冰火双修、幻术、剑术等',
+    experienceLong: '南宫婉擅长冰火双修，幻术和剑术等多种神通，战斗能力强大。',
+    desc: '温婉聪慧，韩立的红颜知己。',
+    backgroundLong: '是韩立的伴侣，气质优雅高贵、容貌倾国倾城，和韩立一样一心向道。南宫婉极大影响了韩立的修仙轨迹，是韩立心中最重要的人。',
+    artifacts: '朱雀环、诛邪刺等',
+    artifactsLong: '南宫婉拥有朱雀环、诛邪刺等法宝，这些法宝在战斗中发挥了重要作用。',
+    skills: '素女轮回功',
+    skillsLong: '南宫婉主修功法为素女轮回功。',
+    cv: '李诗萌'
   },
   {
     name: '紫灵',
     avatar: '/src/images/紫灵头像.png',
-    images: ['/src/images/3.png'],
+    images: ['/src/images/紫灵1.png', '/src/images/紫灵2.png'],
+    realm: '结单初期',
+    realmLong: '紫灵目前的修为境界为结单初期。',
+    experience: '幻术、空间法术、剑术等',
+    experienceLong: '紫灵擅长幻术、空间法术和剑术等多种神通，战斗能力强大。',
     desc: '神秘少女，身世成谜，天赋异禀。',
-    cv: '陶典'
+    backgroundLong: '紫灵，原名：汪凝，别名：仙子、紫丫头，是女主角之一，周媛跟汪恒的女儿，韩立的红颜之一，人界乱星海妙音门少主、魔界六极圣祖门下弟子、黑水上人弟子。',
+    artifacts: '紫灵仙剑',
+    artifactsLong: '紫灵拥有紫灵仙剑。',
+    skills: '紫灵剑法、空间法术等',
+    skillsLong: '紫灵擅长紫灵剑法、空间法术等多种功法，战斗技巧高超。',
+    cv: '刘蕊（成年）、江月（幼年）'
   }
 ])
 // 追加更多示例
 characters.value.push(
-  { name: '李慕婉', avatar: '/images/extra1.jpg', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A' },
-  { name: '石穿空', avatar: '/images/extra2.jpg', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
-  { name: '白飞儿', avatar: '/images/extra3.jpg', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
-  { name: '青元子', avatar: '/images/extra4.jpg', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' },
-  { name: '李慕婉', avatar: '/images/extra1.jpg', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A' },
-  { name: '石穿空', avatar: '/images/extra2.jpg', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
-  { name: '白飞儿', avatar: '/images/extra3.jpg', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
-  { name: '青元子', avatar: '/images/extra4.jpg', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' }
+  { name: '历飞雨', avatar: '/src/images/历飞雨头像.png', images: ['/src/images/历飞雨1.png', '/src/images/历飞雨2.png'], desc: '厉飞雨，七玄门弟子，韩立好友。和韩立同年上山...', cv: '杨天翔' },
+  { name: '石穿空', avatar: '/src/images/紫灵头像.png', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
+  { name: '白飞儿', avatar: '/src/images/紫灵头像.png', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
+  { name: '青元子', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' },
+  { name: '李慕婉', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A' },
+  { name: '石穿空', avatar: '/src/images/紫灵头像.png', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
+  { name: '白飞儿', avatar: '/src/images/紫灵头像.png', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
+  { name: '青元子', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' }
 )
 const currentIndex = ref(0)
 const imageIndex = ref(0)
@@ -114,11 +141,11 @@ function handleScroll(e) {
 }
 // 横向简介卡片内容
 const profileCardList = computed(() => [
-  { title: '背景', content: currentCharacter.value.background || currentCharacter.value.desc, contentLong: currentCharacter.value.backgroundLong || '本作主角，天南越国镜州青牛镇五里沟人氏，小名二愣子，相貌普通，皮肤黝黑，家中排行老四。童年被三叔介绍到七玄门，因身具灵根可修炼长春功而被墨大夫收为弟子，后来凭借升仙令加入越国七大仙派之一的黄枫谷，正式踏上修仙之路。' },
-  { title: '境界', content: currentCharacter.value.realm || '结单后期', contentLong: currentCharacter.value.realmLong },
-  { title: '经历', content: currentCharacter.value.experience || '目前已从乱星海回归，暂居落云宗', contentLong: currentCharacter.value.experienceLong || '目前已从乱星海回归，暂居落云宗' },
-  { title: '法宝', content: currentCharacter.value.artifacts || '掌天瓶、青云剑...', contentLong: currentCharacter.value.artifactsLong || '韩立拥有多件法宝，如掌天瓶、青云剑。' },
-  { title: '技能', content: currentCharacter.value.skills || '巨剑术', contentLong: currentCharacter.value.skillsLong || '韩立擅长多种战斗技巧，尤其是巨剑术、大衍诀。' }
+  { title: '背景', content: currentCharacter.value.background || currentCharacter.value.desc, contentLong: currentCharacter.value.backgroundLong },
+  { title: '境界', content: currentCharacter.value.realm || currentCharacter.value.realm, contentLong: currentCharacter.value.realmLong },
+  { title: '神通', content: currentCharacter.value.experience || currentCharacter.value.experience, contentLong: currentCharacter.value.experienceLong },
+  { title: '法宝', content: currentCharacter.value.artifacts || currentCharacter.value.artifacts, contentLong: currentCharacter.value.artifactsLong },
+  { title: '功法', content: currentCharacter.value.skills || currentCharacter.value.skills, contentLong: currentCharacter.value.skillsLong }
 ])
 const profileCards = ref(null)
 // 横向滚动支持鼠标滚轮滑动
