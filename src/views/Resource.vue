@@ -974,4 +974,16 @@ export default {
       color: #6c757d;
   }
 
+  body.dark-mode .scene-card {
+      background: #312742;
+  }
+
+  body.dark-mode .video-card {
+      background: #312742;
+  }
+
+  body.dark-mode .music-card {
+      background: #312742;
+  }
+
 </style>

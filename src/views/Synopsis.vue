@@ -753,4 +753,61 @@ footer {
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }
 .delay-4 { animation-delay: 0.4s; }
+
+body.dark-mode .content-section {
+  background: #312742;
+}
+
+body.dark-mode .section-content{
+  color: #ddd;
+}
+
+body.dark-mode .story-container {
+  background: #312742;
+}
+
+body.dark-mode .nav-btn {
+  background: #312742;
+}
+
+body.dark-mode .content-section {
+  background: #312742;
+}
+
+body.dark-mode .feature-card {
+  background: #312742;
+}
+
+body.dark-mode .feature-title{
+  color: #ddd;
+}
+
+body.dark-mode .feature-desc{
+  color: #ddd;
+}
+
+body.dark-mode .info-box {
+  background: #312742;
+}
+
+body.dark-mode .info-title{
+  color: #ddd;
+}
+
+body.dark-mode .info-value{
+  color: #ddd;
+}
+
+body.dark-mode .quote-box {
+  background: #312742;
+}
+
+body.dark-mode .quote-author{
+  color: #ddd;
+}
+
+body.dark-mode .quote-text{
+  color: #ddd;
+}
+
 </style>
