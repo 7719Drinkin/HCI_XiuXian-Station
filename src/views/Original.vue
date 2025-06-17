@@ -26,12 +26,21 @@ export default {
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
   text-align: center;
   margin: 235px auto;
+  transition: all 0.3s ease;
+}
+body.dark-mode .original-main {
+  background: #312742;
+  color: #fff;
 }
 .original-title {
   font-size: 2rem;
   color: #ac97f7;
   margin-bottom: 32px;
   font-weight: bold;
+  transition: all 0.3s ease;
+}
+body.dark-mode .original-title {
+  color: #fff;
 }
 .resource-links {
   display: flex;

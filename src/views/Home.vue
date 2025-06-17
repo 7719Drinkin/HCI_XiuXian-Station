@@ -116,36 +116,33 @@ const groupedItems = [
     items: [
       { id: 7, title: '韩立', description: '主角，谨慎冷静，擅长隐忍', image: 'src/images/hanli.jpg' },
       { id: 8, title: '南宫婉', description: '掩月宗长老，韩立道侣。气质清冷，天资卓越。', image: 'src/images/nangongwan.jpg' },
-      { id: 9, title: '厉飞雨', description: '桀骜不驯，修魔之人却重情重义', image: '/images/lifeiyu.jpg' },
-      { id: 10, title: '墨彩环', description: '傲气灵修，韩立重要伙伴', image: '/images/mocaihuan.jpg' },
-      { id: 11, title: '元瑶', description: '出身不凡，身世神秘的女修', image: '/images/yuanyao.jpg' },
-      { id: 12, title: '云梦', description: '温婉如月，擅长控灵之术', image: '/images/yunmeng.jpg' }
+      { id: 9, title: '厉飞雨', description: '桀骜不驯，修魔之人却重情重义', image: 'src/images/历飞雨1.png' },
     ]
   },
   {
     title: '概念场景',
     items: [
-      { id: 11, title: '七玄门', description: '凡尘起点，江湖风云', image: 'src/images/1.png' },
-      { id: 12, title: '黄枫谷', description: '仙门初入，筑基之地', image: 'src/images/2.png' },
-      { id: 13, title: '虚天殿', description: '上古遗迹，至宝之争', image: 'src/images/3.png' },
+      { id: 10, title: '七玄门', description: '凡尘起点，江湖风云', image: 'src/images/1.png' },
+      { id: 11, title: '黄枫谷', description: '仙门初入，筑基之地', image: 'src/images/2.png' },
+      { id: 12, title: '虚天殿', description: '上古遗迹，至宝之争', image: 'src/images/3.png' },
     ]
   },
   {
     title: '原作导航',
     items: [
-      { id: 14, title: '第一卷 凡人篇', description: '初入修仙界的艰难求存', image: '/images/vol1.jpg' },
-      { id: 15, title: '第二卷 灵兽篇', description: '韩立踏上寻找灵兽的旅途', image: '/images/vol2.jpg' },
-      { id: 16, title: '第三卷 魔道篇', description: '与魔道高手展开血战', image: '/images/vol3.jpg' },
-      { id: 17, title: '第四卷 灵界篇', description: '进入更高级的修炼世界', image: '/images/vol4.jpg' }
+      { id: 13, title: '第一卷 凡人篇', description: '初入修仙界的艰难求存', image: '/images/vol1.jpg' },
+      { id: 14, title: '第二卷 灵兽篇', description: '韩立踏上寻找灵兽的旅途', image: '/images/vol2.jpg' },
+      { id: 15, title: '第三卷 魔道篇', description: '与魔道高手展开血战', image: '/images/vol3.jpg' },
+      { id: 16, title: '第四卷 灵界篇', description: '进入更高级的修炼世界', image: '/images/vol4.jpg' }
     ]
   },
   {
     title: '动画导航',
     items: [
-      { id: 18, title: '第一季', description: '从普通人踏入修仙界', image: '/images/anime1.jpg' },
-      { id: 19, title: '第二季', description: '仙魔混战，危机四伏', image: '/images/anime2.jpg' },
-      { id: 20, title: '第三季', description: '灵界修行，命运转折', image: '/images/anime3.jpg' },
-      { id: 21, title: '剧场版', description: '全新剧情，制作精良', image: '/images/anime4.jpg' }
+      { id: 17, title: '第一季', description: '从普通人踏入修仙界', image: '/images/anime1.jpg' },
+      { id: 18, title: '第二季', description: '仙魔混战，危机四伏', image: '/images/anime2.jpg' },
+      { id: 19, title: '第三季', description: '灵界修行，命运转折', image: '/images/anime3.jpg' },
+      { id: 20, title: '剧场版', description: '全新剧情，制作精良', image: '/images/anime4.jpg' }
     ]
   }
 ]

@@ -238,6 +238,11 @@ const showRelation = ref(false)
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
   padding: 32px 24px;
   gap: 40px;
+  transition: all 0.3s ease;
+}
+body.dark-mode .character-section {
+  background: #312742;
+  color: #ddd;
 }
 .character-info {
   flex: 1.2;
@@ -253,6 +258,10 @@ const showRelation = ref(false)
   font-size: 2rem;
   margin-bottom: 0.5rem;
   color: #111;
+  transition: all 0.3s ease;
+}
+body.dark-mode .character-info h2 {
+  color: #fff;
 }
 .cv {
   color: #ac97f7;
@@ -327,6 +336,12 @@ const showRelation = ref(false)
   flex-shrink: 0;
   overflow: hidden;
   position: relative;
+  transition: all 0.3s ease;
+}
+body.dark-mode .profile-card {
+  background: #7e5fb3;
+  color: #ddd;
+  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
 }
 .expand-btn {
   position: absolute;
@@ -359,6 +374,10 @@ const showRelation = ref(false)
   word-break: break-all;
   overflow-y: auto;
   flex: 1;
+  transition: all 0.3s ease;
+}
+body.dark-mode .profile-card-content {
+  color: #ddd;
 }
 .profile-card-content::-webkit-scrollbar {
   width: 5px;
@@ -406,6 +425,7 @@ const showRelation = ref(false)
   scrollbar-width: thin;
   scrollbar-color: rgba(194, 180, 245, 0.3) transparent;
 }
+
 .char-item {
   display: flex;
   flex-direction: column;
@@ -505,6 +525,9 @@ const showRelation = ref(false)
   backdrop-filter: blur(6px);
   z-index: 1;
 }
+body.dark-mode .card-modal-mask {
+  background: rgba(49,39,66,0.5);
+}
 .card-modal-content {
   position: relative;
   z-index: 2;
@@ -522,6 +545,9 @@ const showRelation = ref(false)
   align-items: flex-start;
   animation: modal-pop 0.18s cubic-bezier(.5,1.8,.7,1) both;
   overflow: hidden;
+}
+body.dark-mode .card-modal-content {
+  background: #312742;
 }
 @keyframes modal-pop {
   0% { transform: scale(0.8); opacity: 0; }
