@@ -49,7 +49,6 @@
       </div>
     </div>
   <RightSideBar />
-  <BackToTop />
 </template>
 
 
@@ -115,8 +114,8 @@ const groupedItems = [
   {
     title: '主要人物',
     items: [
-      { id: 7, title: '韩立', description: '主角，谨慎冷静，擅长隐忍', image: '/images/hanli.jpg' },
-      { id: 8, title: '南宫婉', description: '柔情似水，与韩立情深义重', image: '/images/nangongwan.jpg' },
+      { id: 7, title: '韩立', description: '主角，谨慎冷静，擅长隐忍', image: 'src/images/hanli.jpg' },
+      { id: 8, title: '南宫婉', description: '掩月宗长老，韩立道侣。气质清冷，天资卓越。', image: 'src/images/nangongwan.jpg' },
       { id: 9, title: '厉飞雨', description: '桀骜不驯，修魔之人却重情重义', image: '/images/lifeiyu.jpg' },
       { id: 10, title: '墨彩环', description: '傲气灵修，韩立重要伙伴', image: '/images/mocaihuan.jpg' },
       { id: 11, title: '元瑶', description: '出身不凡，身世神秘的女修', image: '/images/yuanyao.jpg' },
@@ -126,9 +125,9 @@ const groupedItems = [
   {
     title: '概念场景',
     items: [
-      { id: 11, title: '黄枫谷', description: '修仙起点，藏龙卧虎之地', image: '/images/place1.jpg' },
-      { id: 12, title: '乱星海', description: '充满危险与机遇的自由海域', image: '/images/place2.jpg' },
-      { id: 13, title: '灵兽山', description: '灵兽遍地，宗门重地', image: '/images/place3.jpg' },
+      { id: 11, title: '七玄门', description: '凡尘起点，江湖风云', image: 'src/images/1.png' },
+      { id: 12, title: '黄枫谷', description: '仙门初入，筑基之地', image: 'src/images/2.png' },
+      { id: 13, title: '虚天殿', description: '上古遗迹，至宝之争', image: 'src/images/3.png' },
     ]
   },
   {
