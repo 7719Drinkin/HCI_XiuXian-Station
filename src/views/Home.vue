@@ -34,7 +34,7 @@
         <div v-for="section in groupedItems" :key="section.title" class="card-section">
           <h2 class="section-title">{{ section.title }}</h2>
           <div class="card-list-grid">
-            <div class="character-card" v-for="item in section.items" :key="item.id">
+            <div class="character-card" v-for="item in section.items" :key="item.id" >
               <div class="character-image">
                 <img :src="item.image" alt="card" />
               </div>
