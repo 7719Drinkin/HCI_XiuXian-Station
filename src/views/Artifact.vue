@@ -1,6 +1,6 @@
 <template>
   <div id="web-bg"></div>
-  <div class="info-main">
+  <div class="artifact-main">
     <div class="character-section">
       <!-- 左侧信息 -->
       <div class="character-info">
@@ -156,17 +156,19 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.info-main {
+.artifact-main {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 80px;
+  margin-top: 0px;
   min-height: 70vh;
 }
 .character-section {
   display: flex;
   width: 100%;
   max-width: 1200px;
+  min-width: 900px;
+  min-height: 420px;
   background: rgba(255,255,255,0.85);
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);

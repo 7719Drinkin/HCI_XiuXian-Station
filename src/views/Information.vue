@@ -212,7 +212,7 @@ function closeExpand() { expandedCardIdx.value = null }
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 80px;
+  margin-top: 125px;
   min-height: 70vh;
 }
 .character-section {
