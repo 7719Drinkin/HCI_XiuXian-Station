@@ -31,6 +31,7 @@
         </div>
       </div>
     </div>
+    <Artifact v-else-if="currentTab === 'artifact'" />
     <div v-else class="other-tab-placeholder">
       <h2>敬请期待：{{ tabMap[currentTab] || '其他内容' }}</h2>
     </div>
@@ -49,6 +50,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import Artifact from './Artifact.vue'
 
 const route = useRoute()
 const router = useRouter()
