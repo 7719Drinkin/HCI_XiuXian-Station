@@ -5,7 +5,7 @@
       class="recommend-card"
       v-for="item in items"
       :key="item.id"
-      @click="navigateTo(item.route)"
+      @click="goToWebsite(item.path)"
     >
       <div class="icon">{{ item.icon }}</div>
       <div class="info">
@@ -34,7 +34,8 @@ const items = [
     title: '人物志',
     desc: '探索主角和反派的命运交织',
     icon: '🧙‍♂️',
-    route: '/characters',
+    route: '/synopsis',
+    path: 'https://zhuanlan.zhihu.com/p/30560699',
   },
   {
     id: 2,
@@ -42,6 +43,7 @@ const items = [
     desc: '回顾修仙旅程的重要篇章',
     icon: '📖',
     route: '/chapters',
+    path: 'https://www.qidian.com/book/107580/',
   },
   {
     id: 3,
@@ -49,6 +51,7 @@ const items = [
     desc: '沉浸在仙乐缥缈的世界',
     icon: '🎵',
     route: '/music',
+    path: 'https://www.bilibili.com/video/BV1Z8EjzrEzr?spm_id_from=333.788.videopod.sections&vd_source=4f5b1f5587fe1b79f0d2a306b980c3d0',
   },
   {
     id: 4,
@@ -56,6 +59,7 @@ const items = [
     desc: '观看修仙世界的影像表达',
     icon: '🎬',
     route: '/media',
+    path: 'https://www.bilibili.com/bangumi/play/ss28747?spm_id_from=333.337.0.0',
   },
 ]
 
@@ -65,6 +69,10 @@ function navigateTo(path) {
 
 function goToGithub() {
   window.open('https://github.com/7719Drinkin/HCI_Project', '_blank')
+}
+
+function goToWebsite(path) {
+  window.open(path, '_blank')
 }
 
 </script>

@@ -22,8 +22,7 @@
             <router-link 
               to="/information" 
               :class="['nav-item', {scrolled: isScrolled, active: showInfoSubnav}]"
-              style="padding: 12px 18px; border-radius: 24px; font-size: 1.2rem; font-weight: bold; background: none; display: flex; align-items: center; height: 100%;"
-            >信息百科</router-link>
+              >信息百科</router-link>
             <transition name="fade">
               <div v-if="showInfoSubnav" class="info-subnav">
                 <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'character' } }">人物</router-link>
@@ -331,16 +330,12 @@ body.dark-mode .header.scrolled .sidebar {
   transform: translateY(0);
 }
 
-
-
 @media (max-width: 768px) {
   .nav-links {
     display: none;
   }
 /* 可以添加汉堡菜单按钮 */
 }
-
-
 
 .info-nav-wrapper {
   display: flex;
@@ -349,6 +344,7 @@ body.dark-mode .header.scrolled .sidebar {
   position: relative;
   padding: 0;
 }
+
 .info-subnav {
   position: absolute;
   top: calc(100% + 10px); /* 下移10px，产生间隔 */
@@ -364,6 +360,7 @@ body.dark-mode .header.scrolled .sidebar {
   align-items: center;
   gap: 16px;
 }
+
 .info-subnav .subnav-item {
   color: #333;
   padding: 8px 20px;
@@ -374,16 +371,29 @@ body.dark-mode .header.scrolled .sidebar {
   text-decoration: none;
   white-space: nowrap;
 }
+
 .info-subnav .subnav-item:hover {
   background: #ac97f7;
   color: #fff;
 }
+
+body.dark-mode .info-subnav {
+  background-color: #312742;
+  color: #ddd;
+}
+
+body.dark-mode .info-subnav .subnav-item {
+  color: #ddd;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.2s;
 }
+
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
+
 .fade-enter-to, .fade-leave-from {
   opacity: 1;
 }

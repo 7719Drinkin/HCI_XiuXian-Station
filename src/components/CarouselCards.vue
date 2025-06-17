@@ -29,19 +29,19 @@ const cards = [
     title: '韩立初入修仙界',
     desc: '凡人少年踏上逆天修仙路',
     image: new URL('@/assets/web-bg1.png', import.meta.url).href,
-    route: '/intro'
+    route: '/synopsis'
   },
   {
     title: '灵兽伙伴介绍',
     desc: '契约灵兽，纵横仙界',
     image: new URL('@/assets/card2.jpg', import.meta.url).href,
-    route: '/beasts'
+    route: '/resource'
   },
   {
     title: '炼丹术揭秘',
     desc: '灵药炼丹术的秘密',
     image: new URL('@/assets/card3.jpg', import.meta.url).href,
-    route: '/alchemy'
+    route: '/resource'
   }
 ]
 
