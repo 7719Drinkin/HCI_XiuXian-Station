@@ -45,21 +45,21 @@ export default {
     const characters = ref([
       {
         name: '韩立',
-        avatar: '/src/images/1.png',
-        images: ['/src/images/韩立.png', '/src/images/2.png'],
-        desc: '本作主角，资质平庸却坚韧不拔，凭借毅力踏上修仙之路。',
-        cv: '刘三木'
+        avatar: '/src/images/韩立头像.png',
+        images: ['/src/images/韩立.png', '/src/images/韩立2.png'],
+        desc: '本作主角，天南胥国境州青牛镇五里沟人氏，相貌普通，家中排行老四。童年韩立被三叔介绍到七玄门，因身具灵根可修炼长春功而被墨大夫收为弟子...',
+        cv: '钱文青'
       },
       {
         name: '南宫婉',
-        avatar: '/src/images/2.png',
+        avatar: '/src/images/南宫碗头像.png',
         images: ['/src/images/2.png', '/src/images/3.png'],
         desc: '温婉聪慧，韩立的红颜知己，修为高深。',
         cv: '小N'
       },
       {
         name: '紫灵',
-        avatar: '/src/images/3.png',
+        avatar: '/src/images/紫灵头像.png',
         images: ['/src/images/3.png'],
         desc: '神秘少女，身世成谜，天赋异禀。',
         cv: '陶典'
@@ -118,6 +118,7 @@ export default {
 .character-info h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  color: #111;
 }
 .cv {
   color: #ac97f7;
@@ -129,20 +130,23 @@ export default {
   margin-bottom: 2rem;
   max-height: 120px;
   overflow-y: auto;
+  color: #111;
 }
 .character-list {
   display: flex;
   flex-direction: row;
-  gap: 18px;
+  gap: 0;
   overflow-x: auto;
   width: 100%;
   padding-bottom: 8px;
   position: absolute;
   left: 0;
   bottom: 0;
-  background: rgba(255,255,255,0.95);
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 -2px 8px #eee;
+  /* 隐藏人物列表的边框与背景 */
+  /* background: rgba(255,255,255,0.95); */
+  /* border-radius: 0 0 12px 12px; */
+  /* box-shadow: 0 -2px 8px #eee; */
+  color: #111;
 }
 .char-item {
   display: flex;
@@ -150,25 +154,36 @@ export default {
   align-items: center;
   cursor: pointer;
   border-radius: 10px;
-  padding: 8px 12px;
+  padding: 8px 8px;
   transition: background 0.2s, box-shadow 0.2s;
   border: 2px solid transparent;
 }
 .char-item.selected {
-  background: #f3eaff;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.char-item.selected img {
   border-color: #ac97f7;
-  box-shadow: 0 2px 8px #ac97f7aa;
+  box-shadow: 0 0 0 6px #e5d6ff, 0 4px 20px #ac97f799;
+  outline: 3px solid #ac97f7;
+  outline-offset: 2px;
 }
 .char-item img {
-  width: 56px;
-  height: 56px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 6px;
-  border: 2px solid #eee;
+  /* border: 4px solid #ac97f7; */
+  box-shadow: 0 0 0 4px #fff, 0 2px 12px #ac97f7aa;
+  background: #fff;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  z-index: 2;
 }
 .char-item span {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
 }
 .character-image-section {
   flex: 2;
