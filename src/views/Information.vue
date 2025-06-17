@@ -114,9 +114,11 @@ function handleScroll(e) {
 }
 // 横向简介卡片内容
 const profileCardList = computed(() => [
-  { title: '背景', content: currentCharacter.value.background || currentCharacter.value.desc },
-  { title: '境界', content: currentCharacter.value.realm || '结单后期' },
-  { title: '经历', content: currentCharacter.value.experience || '目前已从乱星海回归，暂居落云宗' }
+  { title: '背景', content: currentCharacter.value.background || currentCharacter.value.desc, contentLong: currentCharacter.value.backgroundLong || '本作主角，天南越国镜州青牛镇五里沟人氏，小名二愣子，相貌普通，皮肤黝黑，家中排行老四。童年被三叔介绍到七玄门，因身具灵根可修炼长春功而被墨大夫收为弟子，后来凭借升仙令加入越国七大仙派之一的黄枫谷，正式踏上修仙之路。' },
+  { title: '境界', content: currentCharacter.value.realm || '结单后期', contentLong: currentCharacter.value.realmLong },
+  { title: '经历', content: currentCharacter.value.experience || '目前已从乱星海回归，暂居落云宗', contentLong: currentCharacter.value.experienceLong || '目前已从乱星海回归，暂居落云宗' },
+  { title: '法宝', content: currentCharacter.value.artifacts || '掌天瓶、青云剑...', contentLong: currentCharacter.value.artifactsLong || '韩立拥有多件法宝，如掌天瓶、青云剑。' },
+  { title: '技能', content: currentCharacter.value.skills || '巨剑术', contentLong: currentCharacter.value.skillsLong || '韩立擅长多种战斗技巧，尤其是巨剑术、大衍诀。' }
 ])
 const profileCards = ref(null)
 // 横向滚动支持鼠标滚轮滑动
@@ -468,13 +470,15 @@ function closeExpand() { expandedCardIdx.value = null }
   box-shadow: 0 8px 32px #ac97f799;
   padding: 32px 36px 28px 36px;
   min-width: 320px;
-  max-width: 90vw;
+  max-width: 420px;
   min-height: 120px;
-  max-height: 70vh;
+  max-height: 60vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   animation: modal-pop 0.18s cubic-bezier(.5,1.8,.7,1) both;
+  overflow: hidden;
 }
 @keyframes modal-pop {
   0% { transform: scale(0.8); opacity: 0; }
@@ -501,8 +505,9 @@ function closeExpand() { expandedCardIdx.value = null }
   font-size: 1.08rem;
   color: #333;
   margin-top: 10px;
-  max-height: 45vh;
+  max-height: 38vh;
   overflow-y: auto;
   line-height: 1.8;
+  width: 100%;
 }
 </style>
