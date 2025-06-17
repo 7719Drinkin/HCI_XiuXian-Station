@@ -22,12 +22,10 @@
 .footer {
   background: white; /* 和 header 一致 */
   color: rgb(61, 61, 61);
-  padding: 1.5rem 0;
+  padding: 1.0rem 0;
   text-align: center;
   font-family: 'Arial', sans-serif;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
-  bottom: 0;
-  left: 0;
   transition: background 0.3s, box-shadow 0.3s;
 }
 
@@ -57,4 +55,4 @@
 .footer i {
   margin-right: 0.5rem;
 }
-</style
+</style>

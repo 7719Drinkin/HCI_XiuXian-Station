@@ -313,18 +313,13 @@
             </div>
         </div>
     </footer>
-    <BackToTop />
   </div>
 </template>
 
 <script>
-import BackToTop from '@/components/BackToTop.vue'
 //import CharacterRecommendation from '@/components/CharacterRecommendation.vue'
 
 export default {
-  components: {
-    BackToTop
-  },
   data() {
     return {
       expandedIndex: null,
@@ -977,6 +972,18 @@ export default {
   }
   .text-light {
       color: #6c757d;
+  }
+
+  body.dark-mode .scene-card {
+      background: #312742;
+  }
+
+  body.dark-mode .video-card {
+      background: #312742;
+  }
+
+  body.dark-mode .music-card {
+      background: #312742;
   }
 
 </style>
