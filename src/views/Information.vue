@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export default {
@@ -65,6 +65,17 @@ export default {
         cv: '陶典'
       }
     ])
+    // 追加更多示例
+    characters.value.push(
+      { name: '李慕婉', avatar: '/images/extra1.jpg', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A' },
+      { name: '石穿空', avatar: '/images/extra2.jpg', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
+      { name: '白飞儿', avatar: '/images/extra3.jpg', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
+      { name: '青元子', avatar: '/images/extra4.jpg', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' },
+      { name: '李慕婉', avatar: '/images/extra1.jpg', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A' },
+      { name: '石穿空', avatar: '/images/extra2.jpg', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
+      { name: '白飞儿', avatar: '/images/extra3.jpg', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
+      { name: '青元子', avatar: '/images/extra4.jpg', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' }
+    )
     const currentIndex = ref(0)
     const imageIndex = ref(0)
     const currentCharacter = computed(() => characters.value[currentIndex.value])
@@ -78,6 +89,39 @@ export default {
       if (val === 'character') {
         currentIndex.value = 0
         imageIndex.value = 0
+      }
+    })
+    // 处理鼠标滚轮事件
+    function handleScroll(e) {
+      const list = document.querySelector('.character-list')
+      if (list) {
+        list.scrollLeft += e.deltaY
+      }
+    }
+    onMounted(() => {
+      window.addEventListener('scroll', handleScroll)
+      // 横向滚动支持鼠标滚轮滑动并加惯性
+      const list = document.querySelector('.character-list')
+      if (list) {
+        let velocity = 0
+        let rafId = null
+        function animate() {
+          if (Math.abs(velocity) > 0.5) {
+            list.scrollLeft += velocity
+            velocity *= 0.85 // 减速更快，惯性更短
+            rafId = requestAnimationFrame(animate)
+          } else {
+            velocity = 0
+            rafId = null
+          }
+        }
+        list.addEventListener('wheel', (e) => {
+          if (e.deltaY !== 0) {
+            e.preventDefault()
+            velocity += e.deltaY * 0.25 // 初速度更小
+            if (!rafId) animate()
+          }
+        }, { passive: false })
       }
     })
     return {
@@ -148,6 +192,21 @@ export default {
   /* box-shadow: 0 -2px 8px #eee; */
   color: #111;
 }
+.character-list::-webkit-scrollbar {
+  height: 5px;
+  background: transparent;
+}
+.character-list::-webkit-scrollbar-thumb {
+  background: rgba(172,151,247,0.3);
+  border-radius: 6px;
+}
+.character-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(172,151,247,0.6);
+}
+.character-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(172,151,247,0.3) transparent;
+}
 .char-item {
   display: flex;
   flex-direction: column;
@@ -209,6 +268,7 @@ export default {
   bottom: 0;
   display: flex;
   gap: 10px;
+  margin-right: 10px;
 }
 .img-btn {
   background: #eee;
