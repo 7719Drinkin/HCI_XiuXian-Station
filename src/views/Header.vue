@@ -12,7 +12,16 @@
           <router-link to="/home" :class="['nav-item', {scrolled: isScrolled }]">首页</router-link>
           <router-link to="/synopsis" :class="['nav-item', {scrolled: isScrolled }]">故事梗概</router-link>
           <router-link to="/original" :class="['nav-item', {scrolled: isScrolled }]">原作导航</router-link>
-          <router-link to="/information" :class="['nav-item', {scrolled: isScrolled }]">信息百科</router-link>
+          <div class="nav-item info-nav-wrapper" :class="{scrolled: isScrolled}" @mouseenter="showInfoSubnav = true" @mouseleave="showInfoSubnav = false">
+            <router-link to="/information" class="info-nav-link">信息百科</router-link>
+            <transition name="fade">
+              <div v-if="showInfoSubnav" class="info-subnav" @mouseenter="showInfoSubnav = true" @mouseleave="showInfoSubnav = false">
+                <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'character' } }">人物</router-link>
+                <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'artifact' } }">法宝</router-link>
+                <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'array' } }">阵法</router-link>
+              </div>
+            </transition>
+          </div>
           <router-link to="/resource" :class="['nav-item', {scrolled: isScrolled }]">资源</router-link>
         </nav>
         <!--右侧按钮 -->
@@ -62,7 +71,7 @@ export default {
   data() {
     return {
       isScrolled: false,
-
+      showInfoSubnav: false,
     };
   },
   mounted() {
@@ -304,8 +313,7 @@ body.dark-mode .header.scrolled .sidebar {
 
 .sidebar-fade-enter-from,
 .sidebar-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+  transition: opacity 0.2s;
 }
 
 .sidebar-fade-enter-to,
@@ -325,4 +333,44 @@ body.dark-mode .header.scrolled .sidebar {
 
 
 
+.info-nav-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.info-subnav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  min-width: 120px;
+  z-index: 2000;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.info-subnav .subnav-item {
+  color: #333;
+  padding: 8px 20px;
+  text-align: left;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.info-subnav .subnav-item:hover {
+  background: #ac97f7;
+  color: #fff;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to, .fade-leave-from {
+  opacity: 1;
+}
 </style>
