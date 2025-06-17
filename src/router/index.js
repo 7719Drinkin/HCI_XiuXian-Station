@@ -6,7 +6,7 @@ const Synopsis = () => import('@/views/Synopsis.vue')
 const Original = () => import('@/views/Original.vue')
 const Information = () => import('@/views/Information.vue')
 const Resource = () => import('@/views/Resource.vue')
-
+const Artifact = () => import('@/views/Artifact.vue')
 
 const routes = [
   {
@@ -37,6 +37,11 @@ const routes = [
     path: '/resource',
     name: 'Resource',
     component: Resource
+  },
+  {
+    path: '/artifact',
+    name: 'Artifact',
+    component: Artifact
   }
 ]
 
