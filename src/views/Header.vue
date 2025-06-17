@@ -14,18 +14,18 @@
           <router-link to="/original" :class="['nav-item', {scrolled: isScrolled }]">原作导航</router-link>
           <div 
             class="nav-item info-nav-wrapper" 
-            :class="{scrolled: isScrolled}"
-            @mouseenter="showInfoSubnav = true" 
-            @mouseleave="showInfoSubnav = false"
-            style="display: flex; align-items: center; height: 100%; position: relative; padding: 0;"
+            :class="{scrolled: isScrolled, active: showInfoSubnav}"
+            @mouseenter="onInfoNavWrapperEnter" 
+            @mouseleave="onInfoNavWrapperLeave"
+            style="display: flex; align-items: center; position: relative; padding: 0;"
           >
             <router-link 
               to="/information" 
-              :class="['nav-item', {scrolled: isScrolled}]"
+              :class="['nav-item', {scrolled: isScrolled, active: showInfoSubnav}]"
               style="padding: 12px 18px; border-radius: 24px; font-size: 1.2rem; font-weight: bold; background: none; display: flex; align-items: center; height: 100%;"
             >信息百科</router-link>
             <transition name="fade">
-              <div v-if="showInfoSubnav" class="info-subnav" @mouseenter="showInfoSubnav = true" @mouseleave="showInfoSubnav = false">
+              <div v-if="showInfoSubnav" class="info-subnav">
                 <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'character' } }">人物</router-link>
                 <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'artifact' } }">法宝</router-link>
                 <router-link class="subnav-item" :to="{ path: '/information', query: { tab: 'array' } }">阵法</router-link>
@@ -75,6 +75,7 @@ function goToGithub() {
 
 const isScrolled = ref(false)
 const showInfoSubnav = ref(false)
+let hideTimer = null
 
 function handleScroll() {
   isScrolled.value = window.scrollY > 0
@@ -85,6 +86,16 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
+
+function onInfoNavWrapperEnter() {
+  clearTimeout(hideTimer)
+  showInfoSubnav.value = true
+}
+function onInfoNavWrapperLeave() {
+  hideTimer = setTimeout(() => {
+    showInfoSubnav.value = false
+  }, 200)
+}
 </script>
 
 <style scoped> 
@@ -375,5 +386,14 @@ body.dark-mode .header.scrolled .sidebar {
 }
 .fade-enter-to, .fade-leave-from {
   opacity: 1;
+}
+
+.nav-item.active {
+  background: #ac97f7;
+  color: rgba(206, 255, 235, 0.7) !important;
+}
+.header.scrolled .nav-item.active {
+  background: #ac97f7;
+  color: rgba(206, 255, 235, 0.7) !important;
 }
 </style>
