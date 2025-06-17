@@ -49,7 +49,6 @@
       </div>
     </div>
   <RightSideBar />
-  <BackToTop />
 </template>
 
 

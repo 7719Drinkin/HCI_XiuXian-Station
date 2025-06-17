@@ -313,18 +313,13 @@
             </div>
         </div>
     </footer>
-    <BackToTop />
   </div>
 </template>
 
 <script>
-import BackToTop from '@/components/BackToTop.vue'
 //import CharacterRecommendation from '@/components/CharacterRecommendation.vue'
 
 export default {
-  components: {
-    BackToTop
-  },
   data() {
     return {
       expandedIndex: null,

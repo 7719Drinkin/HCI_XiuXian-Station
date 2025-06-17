@@ -2,6 +2,7 @@
   <div id="app">
     <Header />
     <router-view />
+    <BackToTop />
     <Footer />
   </div>
 
@@ -22,11 +23,13 @@ onMounted(() => {
 <script>
 import Header from './views/Header.vue'
 import Footer from './views/Footer.vue';
+import BackToTop from './components/BackToTop.vue';
 
 export default {
   components: {
     Header,
     Footer,
+    BackToTop,
   },
   methods:{
     
