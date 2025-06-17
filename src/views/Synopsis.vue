@@ -101,11 +101,16 @@
         </div>
       </div>
     </div>
+    <BackToTop />
   </div>
 </template>
 
 <script>
+import BackToTop from '@/components/BackToTop.vue'
 export default {
+  components: {
+    BackToTop
+  },
   data() {
     return {
       currentChapter: 0,
