@@ -4,7 +4,10 @@
     <div v-if="currentTab === 'character'" class="character-section">
       <!-- 左侧信息 -->
       <div class="character-info">
-        <h2>{{ currentCharacter.name }}</h2>
+        <div style="display: flex; align-items: center;">
+          <h2 style="margin-right: 8px;">{{ currentCharacter.name }}</h2>
+          <button class="relation-btn" @click="showRelation = true" title="查看人物关系图谱">🔗</button>
+        </div>
         <p class="cv">CV：{{ currentCharacter.cv }}</p>
         <!-- 横向简介卡片滑动区 -->
         <div class="profile-cards-wrapper">
@@ -44,6 +47,13 @@
         <div class="profile-card-content profile-card-content-large">{{ profileCardList[expandedCardIdx].contentLong || profileCardList[expandedCardIdx].content }}</div>
       </div>
     </div>
+    <div v-if="showRelation" class="relation-modal">
+      <div class="relation-mask" @click="showRelation = false"></div>
+      <div class="relation-content">
+        <button class="relation-close-btn" @click="showRelation = false">×</button>
+        <img :src="currentCharacter.relationImg || '/src/images/relation-demo.png'" alt="人物关系图谱" class="relation-img" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,7 +83,8 @@ const characters = ref([
     artifactsLong: '韩立拥有多件法宝，如掌天瓶、青云剑、鬼罗幡等，这些法宝在战斗中发挥了重要作用。',
     skills: '大衍诀、长春功、三转重元功等',
     skillsLong: '韩立擅长多种功法，如大衍诀、长春功、三砖重元功等，战斗技巧高超。',
-    cv: '钱文青'
+    cv: '钱文青',
+    relationImg: '/src/images/韩立人物关系图谱.png'
   },
   {
     name: '南宫婉',
@@ -89,7 +100,8 @@ const characters = ref([
     artifactsLong: '南宫婉拥有朱雀环、诛邪刺等法宝，这些法宝在战斗中发挥了重要作用。',
     skills: '素女轮回功',
     skillsLong: '南宫婉主修功法为素女轮回功。',
-    cv: '李诗萌'
+    cv: '李诗萌',
+    relationImg: '/src/images/南宫碗人物关系图谱.png'
   },
   {
     name: '紫灵',
@@ -105,19 +117,20 @@ const characters = ref([
     artifactsLong: '紫灵拥有紫灵仙剑。',
     skills: '紫灵剑法、空间法术等',
     skillsLong: '紫灵擅长紫灵剑法、空间法术等多种功法，战斗技巧高超。',
-    cv: '刘蕊（成年）、江月（幼年）'
+    cv: '刘蕊（成年）、江月（幼年）',
+    relationImg: '/src/images/紫灵人物关系图谱.png'
   }
 ])
 // 追加更多示例
 characters.value.push(
-  { name: '历飞雨', avatar: '/src/images/历飞雨头像.png', images: ['/src/images/历飞雨1.png', '/src/images/历飞雨2.png'], desc: '厉飞雨，七玄门弟子，韩立好友。和韩立同年上山...', cv: '杨天翔' },
-  { name: '石穿空', avatar: '/src/images/紫灵头像.png', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
-  { name: '白飞儿', avatar: '/src/images/紫灵头像.png', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
-  { name: '青元子', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' },
-  { name: '李慕婉', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A' },
-  { name: '石穿空', avatar: '/src/images/紫灵头像.png', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B' },
-  { name: '白飞儿', avatar: '/src/images/紫灵头像.png', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C' },
-  { name: '青元子', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D' }
+  { name: '历飞雨', avatar: '/src/images/历飞雨头像.png', images: ['/src/images/历飞雨1.png', '/src/images/历飞雨2.png'], desc: '厉飞雨，七玄门弟子，韩立好友。和韩立同年上山...', cv: '杨天翔', relationImg: '/src/images/relation-demo.png' },
+  { name: '石穿空', avatar: '/src/images/紫灵头像.png', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B', relationImg: '/src/images/relation-demo.png' },
+  { name: '白飞儿', avatar: '/src/images/紫灵头像.png', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C', relationImg: '/src/images/relation-demo.png' },
+  { name: '青元子', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D', relationImg: '/src/images/relation-demo.png' },
+  { name: '李慕婉', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '神秘女修，心思缜密。', cv: '配音A', relationImg: '/src/images/relation-demo.png' },
+  { name: '石穿空', avatar: '/src/images/紫灵头像.png', images: ['/src/images/2.png'], desc: '体修高手，力大无穷。', cv: '配音B', relationImg: '/src/images/relation-demo.png' },
+  { name: '白飞儿', avatar: '/src/images/紫灵头像.png', images: ['/src/images/3.png'], desc: '灵兽使，善驭灵禽。', cv: '配音C', relationImg: '/src/images/relation-demo.png' },
+  { name: '青元子', avatar: '/src/images/紫灵头像.png', images: ['/src/images/1.png'], desc: '炼丹宗师，医术高明。', cv: '配音D', relationImg: '/src/images/relation-demo.png' }
 )
 const currentIndex = ref(0)
 const imageIndex = ref(0)
@@ -205,6 +218,7 @@ onMounted(() => {
 const expandedCardIdx = ref(null)
 function expandCard(idx) { expandedCardIdx.value = idx }
 function closeExpand() { expandedCardIdx.value = null }
+const showRelation = ref(false)
 </script>
 
 <style scoped>
@@ -538,5 +552,79 @@ function closeExpand() { expandedCardIdx.value = null }
   overflow-y: auto;
   line-height: 1.8;
   width: 100%;
+}
+.relation-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #ac97f7;
+  cursor: pointer;
+  margin-left: 2px;
+  border-radius: 6px;
+  padding: 2px 6px;
+  transition: background 0.2s;
+}
+.relation-btn:hover {
+  background: #f3eaff;
+}
+.relation-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.relation-mask {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+}
+.relation-content {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #ac97f799;
+  padding: 24px 24px 18px 24px;
+  min-width: 320px;
+  max-width: 90vw;
+  min-height: 120px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: modal-pop 0.18s cubic-bezier(.5,1.8,.7,1) both;
+  overflow: auto;
+}
+.relation-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #ac97f7;
+  cursor: pointer;
+  z-index: 3;
+  padding: 2px 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.relation-close-btn:hover {
+  background: #f3eaff;
+}
+.relation-img {
+  max-width: 85vw;
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #ac97f733;
+  margin-top: 12px;
+  display: block;
+  object-fit: contain;
 }
 </style>
