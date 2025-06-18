@@ -768,6 +768,9 @@ body.dark-mode .relation-btn:hover {
   backdrop-filter: blur(6px);
   z-index: 1;
 }
+body.dark-mode .relation-mask {
+  background: rgba(49,39,66,0.5);
+}
 .relation-content {
   position: relative;
   z-index: 2;
@@ -786,6 +789,9 @@ body.dark-mode .relation-btn:hover {
   overflow: hidden;
   position: relative;
   user-select: none;
+}
+body.dark-mode .relation-content {
+  background: #312742;
 }
 .relation-close-btn {
   position: absolute;

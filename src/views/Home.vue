@@ -103,19 +103,19 @@ const groupedItems = [
   {
     title: '内容梗概',
     items: [
-      { id: 1, title: '凡人修仙传', description: '一个凡人追寻长生的故事', image: '/images/story1.jpg' },
-      { id: 2, title: '初入修真界', description: '韩立机缘巧合进入七玄门', image: '/images/story2.jpg' },
-      { id: 3, title: '险境突围', description: '在秘境中生死边缘突破', image: '/images/story3.jpg' },
-      { id: 4, title: '问道长生', description: '踏遍仙路，天道无情亦有情', image: '/images/story4.jpg' },
-      { id: 5, title: '背叛与信任', description: '修仙之路不仅有敌人，也有背后的暗箭', image: '/images/story5.jpg' },
-      { id: 6, title: '成仙之谜', description: '韩立逐渐发现修仙世界背后隐藏的秘密', image: '/images/story6.jpg' }
+      { id: 1, title: '凡人修仙传', description: '一个凡人追寻长生的故事', image: 'src/images/10.jpg' }, 
+      { id: 2, title: '初入修真界', description: '韩立机缘巧合进入七玄门', image: 'src/images/1.png' },
+      { id: 3, title: '险境突围', description: '在秘境中生死边缘突破', image: 'src/images/9.jpg' },
+      { id: 4, title: '问道长生', description: '踏遍仙路，天道无情亦有情', image: 'src/images/7.jpg' },
+      { id: 5, title: '背叛与信任', description: '修仙之路不仅有敌人，也有背后的暗箭', image: 'src/images/6.jpg' },
+      { id: 6, title: '成仙之谜', description: '韩立逐渐发现修仙世界背后隐藏的秘密', image: 'src/images/8.jpg' }
     ]
   },
   {
     title: '主要人物',
     items: [
-      { id: 7, title: '韩立', description: '主角，谨慎冷静，擅长隐忍', image: 'src/images/hanli.jpg' },
-      { id: 8, title: '南宫婉', description: '掩月宗长老，韩立道侣。气质清冷，天资卓越。', image: 'src/images/nangongwan.jpg' },
+      { id: 7, title: '韩立', description: '主角，谨慎冷静，擅长隐忍', image: 'src/images/韩立.png' },
+      { id: 8, title: '南宫婉', description: '掩月宗长老，韩立道侣。气质清冷，天资卓越。', image: 'src/images/南宫碗1.png' },
       { id: 9, title: '厉飞雨', description: '桀骜不驯，修魔之人却重情重义', image: 'src/images/历飞雨1.png' },
     ]
   },
@@ -127,24 +127,6 @@ const groupedItems = [
       { id: 12, title: '虚天殿', description: '上古遗迹，至宝之争', image: 'src/images/3.png' },
     ]
   },
-  {
-    title: '原作导航',
-    items: [
-      { id: 13, title: '第一卷 凡人篇', description: '初入修仙界的艰难求存', image: '/images/vol1.jpg' },
-      { id: 14, title: '第二卷 灵兽篇', description: '韩立踏上寻找灵兽的旅途', image: '/images/vol2.jpg' },
-      { id: 15, title: '第三卷 魔道篇', description: '与魔道高手展开血战', image: '/images/vol3.jpg' },
-      { id: 16, title: '第四卷 灵界篇', description: '进入更高级的修炼世界', image: '/images/vol4.jpg' }
-    ]
-  },
-  {
-    title: '动画导航',
-    items: [
-      { id: 17, title: '第一季', description: '从普通人踏入修仙界', image: '/images/anime1.jpg' },
-      { id: 18, title: '第二季', description: '仙魔混战，危机四伏', image: '/images/anime2.jpg' },
-      { id: 19, title: '第三季', description: '灵界修行，命运转折', image: '/images/anime3.jpg' },
-      { id: 20, title: '剧场版', description: '全新剧情，制作精良', image: '/images/anime4.jpg' }
-    ]
-  }
 ]
 
 
@@ -178,7 +160,7 @@ export default {
     height: 100%;
     background-color: #0c2138; /* 备用背景色 */;
     filter: blur(1px);
-    background-image: url('../assets/web-bg1.png'); /* 替换为你的背景图片 */
+    background-image: url('src/images/日照.png'); /* 替换为你的背景图片 */
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -187,6 +169,13 @@ export default {
     background-attachment: fixed;
     animation: blur-to-clear 1s cubic-bezier(0.62, 0.21, 0.25, 1) 0s 1 normal backwards running,
         scale 1.5s cubic-bezier(0.62, 0.21, 0.25, 1) 0s 1 both;
+    transition: opacity 0.3s, background 0.3s;
+}
+
+body.dark-mode #web-bg {
+    background-image: url('../assets/web-bg1.png'); /* 替换为你的背景图片 */
+    background-size: cover;
+    background-position: center;
 }
 
 .content {

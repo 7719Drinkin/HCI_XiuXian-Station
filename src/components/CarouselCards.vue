@@ -34,14 +34,14 @@ const cards = [
   {
     title: '灵兽伙伴介绍',
     desc: '契约灵兽，纵横仙界',
-    image: new URL('@/assets/card2.jpg', import.meta.url).href,
-    route: '/resource'
+    image: new URL('@/images/hanli.jpg', import.meta.url).href,
+    route: '/information'
   },
   {
     title: '炼丹术揭秘',
     desc: '灵药炼丹术的秘密',
-    image: new URL('@/assets/card3.jpg', import.meta.url).href,
-    route: '/resource'
+    image: new URL('@/images/玄天葫芦1.png', import.meta.url).href,
+    route: '/information'
   }
 ]
 
