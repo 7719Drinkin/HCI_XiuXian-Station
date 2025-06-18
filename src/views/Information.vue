@@ -155,6 +155,16 @@ const currentCharacter = computed(() => characters.value[currentIndex.value])
 function selectCharacter(idx) {
   currentIndex.value = idx
   imageIndex.value = 0
+  // 自动滚动到对应人物头像
+  nextTick(() => {
+    const list = document.querySelector('.character-list')
+    if (list) {
+      const items = list.querySelectorAll('.char-item')
+      if (items[idx]) {
+        items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
+  })
 }
 // 切tab时重置人物
 watch(currentTab, val => {
@@ -259,9 +269,7 @@ function searchCharacter() {
     searchNoMatch.value = false
     return
   }
-  const idx = characters.value.findIndex(c =>
-    c.name.includes(keyword) || (c.desc && c.desc.includes(keyword))
-  )
+  const idx = characters.value.findIndex(c => c.name.includes(keyword))
   if (idx !== -1) {
     selectCharacter(idx)
     searchNoMatch.value = false

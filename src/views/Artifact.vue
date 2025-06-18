@@ -96,6 +96,32 @@ const artifacts = ref([
     abilityLong: '青凝镜可映照虚实，探查敌情，破解阵法与禁制，乃修士必备之物。',
     experience: '韩立常用法器。',
     experienceLong: '青凝镜为韩立常用法器，屡次助其洞察敌情，破解重重危机。'
+  },
+  {
+    name: '微光',
+    avatar: '/src/images/青凝镜.png',
+    images: ['/src/images/青凝镜1.png'],
+    type: '法器',
+    desc: '可映照虚实，洞察一切。',
+    background: '古老法器，能映照虚实，洞察隐秘。',
+    backgroundLong: '青凝镜乃古老法器，能映照虚实，洞察一切隐秘，常用于探查敌情与破解阵法。',
+    ability: '映照、探查、破解',
+    abilityLong: '青凝镜可映照虚实，探查敌情，破解阵法与禁制，乃修士必备之物。',
+    experience: '韩立常用法器。',
+    experienceLong: '青凝镜为韩立常用法器，屡次助其洞察敌情，破解重重危机。'
+  },
+  {
+    name: '幻影',
+    avatar: '/src/images/青凝镜.png',
+    images: ['/src/images/青凝镜1.png'],
+    type: '法器',
+    desc: '可映照虚实，洞察一切。',
+    background: '古老法器，能映照虚实，洞察隐秘。',
+    backgroundLong: '青凝镜乃古老法器，能映照虚实，洞察一切隐秘，常用于探查敌情与破解阵法。',
+    ability: '映照、探查、破解',
+    abilityLong: '青凝镜可映照虚实，探查敌情，破解阵法与禁制，乃修士必备之物。',
+    experience: '韩立常用法器。',
+    experienceLong: '青凝镜为韩立常用法器，屡次助其洞察敌情，破解重重危机。'
   }
 ])
 const currentIndex = ref(0)
@@ -104,6 +130,16 @@ const currentArtifact = computed(() => artifacts.value[currentIndex.value])
 function selectArtifact(idx) {
   currentIndex.value = idx
   imageIndex.value = 0
+  // 自动滚动到对应法宝头像
+  nextTick(() => {
+    const list = document.querySelector('.character-list')
+    if (list) {
+      const items = list.querySelectorAll('.char-item')
+      if (items[idx]) {
+        items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
+  })
 }
 const profileCardList = computed(() => [
   { title: '背景', content: currentArtifact.value.background || currentArtifact.value.desc, contentLong: currentArtifact.value.backgroundLong },
@@ -123,7 +159,7 @@ function searchArtifact() {
     return
   }
   const idx = artifacts.value.findIndex(a =>
-    a.name.includes(keyword) || (a.desc && a.desc.includes(keyword))
+    a.name.includes(keyword)
   )
   if (idx !== -1) {
     selectArtifact(idx)
