@@ -167,17 +167,16 @@ const profileCardList = computed(() => [
 ])
 const profileCards = ref(null)
 // 横向滚动支持鼠标滚轮滑动
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-  // 简介卡片横向滚动支持鼠标滚轮滑动和惯性
+function bindScrollInertia() {
   nextTick(() => {
-    const profileCards = document.querySelector('.profile-cards-wrapper')
-    if (profileCards) {
+    // 简介卡片横向滚动
+    const profileCardsWrapper = document.querySelector('.profile-cards-wrapper')
+    if (profileCardsWrapper && !profileCardsWrapper._inertiaBind) {
       let velocity = 0
       let rafId = null
       function animate() {
         if (Math.abs(velocity) > 0.5) {
-          profileCards.scrollLeft += velocity
+          profileCardsWrapper.scrollLeft += velocity
           velocity *= 0.85
           rafId = requestAnimationFrame(animate)
         } else {
@@ -185,17 +184,18 @@ onMounted(() => {
           rafId = null
         }
       }
-      profileCards.addEventListener('wheel', (e) => {
+      profileCardsWrapper.addEventListener('wheel', (e) => {
         if (e.deltaY !== 0) {
           e.preventDefault()
           velocity += e.deltaY * 0.35
           if (!rafId) animate()
         }
       }, { passive: false })
+      profileCardsWrapper._inertiaBind = true
     }
-    // 人物列表横向滚动（惯性逻辑保留）
+    // 人物列表横向滚动
     const list = document.querySelector('.character-list')
-    if (list) {
+    if (list && !list._inertiaBind) {
       let velocity = 0
       let rafId = null
       function animate() {
@@ -215,8 +215,18 @@ onMounted(() => {
           if (!rafId) animate()
         }
       }, { passive: false })
+      list._inertiaBind = true
     }
   })
+}
+
+onMounted(() => {
+  bindScrollInertia()
+})
+watch(currentTab, val => {
+  if (val === 'character') {
+    bindScrollInertia()
+  }
 })
 const expandedCardIdx = ref(null)
 function expandCard(idx) { expandedCardIdx.value = idx }
