@@ -286,6 +286,8 @@ body.dark-mode .search-hint {
   padding: 32px 24px;
   gap: 40px;
   transition: all 0.3s ease;
+  box-sizing: border-box;
+  align-items: stretch;
 }
 body.dark-mode .character-section {
   background: #312742;
@@ -297,8 +299,10 @@ body.dark-mode .character-section {
   flex-direction: column;
   align-items: flex-start;
   min-width: 260px;
+  max-width: 700px;
   position: relative;
   height: 420px;
+  box-sizing: border-box;
 }
 .character-info h2 {
   font-size: 2rem;
@@ -372,9 +376,10 @@ body.dark-mode .character-info h2 {
   transition: all 0.3s ease;
 }
 body.dark-mode .profile-card {
-  background: #312742;
+  background: #7e5fb3 !important;
   color: #ddd;
-  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+  border: 1px solid #5a4b6e;
+  box-shadow: 0 5px 15px rgba(255,255,255,0.05);
 }
 .expand-btn {
   position: absolute;
@@ -401,17 +406,19 @@ body.dark-mode .profile-card {
   margin-top: 0;
   margin-left: 0;
 }
+body.dark-mode .profile-card-title {
+  color: #bfa7ff;
+}
 .profile-card-content {
   font-size: 0.98rem;
   color: #333;
   word-break: break-all;
   overflow-y: auto;
   flex: 1;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(172,151,247,0.3) transparent;
+  transition: all 0.3s ease;
 }
 body.dark-mode .profile-card-content {
-  color: #ddd;
+  color: #ccc;
 }
 .profile-card-content::-webkit-scrollbar {
   width: 5px;
@@ -494,6 +501,8 @@ body.dark-mode .profile-card-content {
   position: relative;
   height: 420px;
   width: 320px;
+  min-width: 650px;
+  box-sizing: border-box;
 }
 .character-image {
   width: 100%;
@@ -593,7 +602,7 @@ body.dark-mode .card-modal-content {
 .expand-close-btn:hover {
   background: #f3eaff;
 }
-.profile-card-content-large {
+.profile-card-content_large {
   font-size: 1.08rem;
   color: #333;
   margin-top: 10px;
