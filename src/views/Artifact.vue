@@ -1,6 +1,17 @@
 <template>
   <div id="web-bg"></div>
   <div class="artifact-main">
+    <div class="search-bar-wrapper">
+      <input
+        v-model="searchText"
+        class="search-bar"
+        type="text"
+        placeholder="搜索法宝名/简介..."
+        @keyup.enter="searchArtifact"
+      />
+      <span class="search-icon" @click="searchArtifact">🔍</span>
+      <span v-if="searchText && searchNoMatch" class="search-hint">未找到相关法宝</span>
+    </div>
     <div class="character-section">
       <!-- 左侧信息 -->
       <div class="character-info">
@@ -44,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 
 const artifacts = ref([
   {
@@ -102,6 +113,28 @@ const profileCardList = computed(() => [
 const expandedCardIdx = ref(null)
 function expandCard(idx) { expandedCardIdx.value = idx }
 function closeExpand() { expandedCardIdx.value = null }
+
+const searchText = ref('')
+const searchNoMatch = ref(false)
+function searchArtifact() {
+  const keyword = searchText.value.trim()
+  if (!keyword) {
+    searchNoMatch.value = false
+    return
+  }
+  const idx = artifacts.value.findIndex(a =>
+    a.name.includes(keyword) || (a.desc && a.desc.includes(keyword))
+  )
+  if (idx !== -1) {
+    selectArtifact(idx)
+    searchNoMatch.value = false
+  } else {
+    searchNoMatch.value = true
+  }
+}
+watch(searchText, val => {
+  if (!val) searchNoMatch.value = false
+})
 
 onMounted(() => {
   nextTick(() => {
@@ -173,10 +206,73 @@ body.dark-mode #web-bg {
 }
 .artifact-main {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   margin-top: 0px;
   min-height: 70vh;
+}
+.search-bar-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 8px;
+}
+.search-bar {
+  width: 260px;
+  height: 38px;
+  border-radius: 20px;
+  border: 1.5px solid #ac97f7;
+  background: #f8f6ff;
+  color: #333;
+  font-size: 1.08rem;
+  padding: 0 40px 0 16px;
+  outline: none;
+  box-shadow: 0 2px 8px #ac97f722;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+.search-bar:focus {
+  border-color: #7e6bc9;
+  background: #f3eaff;
+}
+.search-icon {
+  margin-left: -32px;
+  font-size: 1.2rem;
+  color: #ac97f7;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.search-icon:hover {
+  color: #7e6bc9;
+}
+.search-hint {
+  margin-left: 12px;
+  color: #e57373;
+  font-size: 0.98rem;
+  transition: color 0.2s;
+  font-weight: 700;
+}
+body.dark-mode .search-bar {
+  background: #2a2238;
+  color: #eee;
+  border: 1.5px solid #bfa7ff;
+  box-shadow: 0 2px 8px #0002;
+}
+body.dark-mode .search-bar:focus {
+  background: #312742;
+  border-color: #bfa7ff;
+}
+body.dark-mode .search-icon {
+  color: #bfa7ff;
+}
+body.dark-mode .search-icon:hover {
+  color: #fff;
+}
+body.dark-mode .search-hint {
+  color: #ffb3b3;
 }
 .character-section {
   display: flex;
