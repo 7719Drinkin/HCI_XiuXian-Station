@@ -110,6 +110,7 @@ function goToWebsite(path) {
 .icon {
   font-size: 2rem;
   margin-right: 1rem;
+  color: rgb(255, 255, 255); 
 }
 
 .info {
@@ -123,9 +124,10 @@ function goToWebsite(path) {
   color: #ffffff;
 }
 
+
 .desc {
   font-size: 0.9rem;
-  color: #dcdcdc;
+  color: #ffffff;
   margin-top: 0.2rem;
 }
 
