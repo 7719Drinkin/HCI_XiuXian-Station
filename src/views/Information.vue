@@ -63,10 +63,22 @@
       </div>
     </div>
     <div v-if="showRelation" class="relation-modal">
-      <div class="relation-mask" @click="showRelation = false"></div>
-      <div class="relation-content">
-        <button class="relation-close-btn" @click="showRelation = false">×</button>
-        <img :src="currentCharacter.relationImg || '/src/images/relation-demo.png'" alt="人物关系图谱" class="relation-img" />
+      <div class="relation-mask" @click="closeRelation"></div>
+      <div class="relation-content"
+        @wheel="onRelationWheel"
+        @mousedown="onRelationMouseDown"
+        style="overflow: hidden;">
+        <button class="relation-close-btn" @click="closeRelation">×</button>
+        <img
+          :src="currentCharacter.relationImg || '/src/images/relation-demo.png'"
+          alt="人物关系图谱"
+          class="relation-img"
+          :style="{
+            transform: `translate(${relationOffset.x}px, ${relationOffset.y}px) scale(${relationScale})`,
+            pointerEvents: dragging ? 'none' : 'auto'
+          }"
+          draggable="false"
+        />
       </div>
     </div>
   </div>
@@ -286,6 +298,49 @@ const filteredCharacters = computed(() => {
     c.name.includes(searchText.value.trim()) ||
     (c.desc && c.desc.includes(searchText.value.trim()))
   )
+})
+const relationScale = ref(0.7)
+const relationOffset = ref({ x: 0, y: -130 })
+const dragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
+const imgStart = ref({ x: 0, y: 0 })
+
+function onRelationWheel(e) {
+  e.preventDefault()
+  let scale = relationScale.value + (e.deltaY < 0 ? 0.1 : -0.1)
+  scale = Math.max(0.3, Math.min(3, scale))
+  relationScale.value = scale
+}
+function onRelationMouseDown(e) {
+  if (e.button !== 0) return
+  dragging.value = true
+  dragStart.value = { x: e.clientX, y: e.clientY }
+  imgStart.value = { ...relationOffset.value }
+  window.addEventListener('mousemove', onRelationMouseMove)
+  window.addEventListener('mouseup', onRelationMouseUp)
+}
+function onRelationMouseMove(e) {
+  if (!dragging.value) return
+  relationOffset.value = {
+    x: imgStart.value.x + (e.clientX - dragStart.value.x),
+    y: imgStart.value.y + (e.clientY - dragStart.value.y)
+  }
+}
+function onRelationMouseUp() {
+  dragging.value = false
+  window.removeEventListener('mousemove', onRelationMouseMove)
+  window.removeEventListener('mouseup', onRelationMouseUp)
+}
+function closeRelation() {
+  showRelation.value = false
+  relationScale.value = 0.7
+  relationOffset.value = { x: 0, y: -60 }
+}
+watch(showRelation, val => {
+  if (val) {
+    relationScale.value = 0.7
+    relationOffset.value = { x: 0, y: -130 }
+  }
 })
 </script>
 
@@ -718,7 +773,9 @@ body.dark-mode .relation-btn:hover {
   flex-direction: column;
   align-items: center;
   animation: modal-pop 0.18s cubic-bezier(.5,1.8,.7,1) both;
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
 }
 .relation-close-btn {
   position: absolute;
@@ -738,8 +795,8 @@ body.dark-mode .relation-btn:hover {
   background: #f3eaff;
 }
 .relation-img {
-  max-width: 85vw;
-  max-height: 72vh;
+  max-width: none;
+  max-height: none;
   width: auto;
   height: auto;
   border-radius: 12px;
@@ -747,6 +804,11 @@ body.dark-mode .relation-btn:hover {
   margin-top: 12px;
   display: block;
   object-fit: contain;
+  cursor: grab;
+  transition: box-shadow 0.2s;
+}
+.relation-img:active {
+  cursor: grabbing;
 }
 .search-bar-wrapper {
   display: flex;
