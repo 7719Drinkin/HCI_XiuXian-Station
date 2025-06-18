@@ -231,6 +231,21 @@ const relationIcon = computed(() =>
 </script>
 
 <style scoped>
+#web-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: url('/src/images/日照.png') center/cover no-repeat;
+  opacity: 1;
+  transition: opacity 0.3s, background 0.3s;
+}
+body.dark-mode #web-bg {
+  background-image: url('../assets/web-bg1.png');
+  /* 或者和主页保持一致的背景设置 */
+}
 .info-main {
   display: flex;
   justify-content: center;
