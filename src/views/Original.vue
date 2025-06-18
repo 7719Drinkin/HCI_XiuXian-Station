@@ -16,7 +16,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#web-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: url('/src/images/日照.png') center/cover no-repeat;
+  opacity: 1;
+  transition: opacity 0.3s, background 0.3s;
+}
+body.dark-mode #web-bg {
+  background-image: url('../assets/web-bg1.png');
+  /* 或者和主页保持一致的背景设置 */
+}
 .original-main {
   max-width: 600px;
   margin: 120px auto 0 auto;
@@ -25,7 +40,7 @@ export default {
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
   text-align: center;
-  margin: 235px auto;
+  margin: 233px auto;
   transition: all 0.3s ease;
 }
 body.dark-mode .original-main {

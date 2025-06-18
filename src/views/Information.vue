@@ -1,36 +1,51 @@
 <template>
   <div id="web-bg"></div>
   <div class="info-main">
-    <div v-if="currentTab === 'character'" class="character-section">
-      <!-- 左侧信息 -->
-      <div class="character-info">
-        <div style="display: flex; align-items: center;">
-          <h2 style="margin-right: 8px;">{{ currentCharacter.name }}</h2>
-          <button class="relation-btn" @click="showRelation = true" title="查看人物关系图谱">🔗</button>
-        </div>
-        <p class="cv">CV：{{ currentCharacter.cv }}</p>
-        <!-- 横向简介卡片滑动区 -->
-        <div class="profile-cards-wrapper">
-          <div class="profile-cards" ref="profileCards">
-            <div class="profile-card" v-for="(card, idx) in profileCardList" :key="idx">
-              <button class="expand-btn" @click="expandCard(idx)">⤢</button>
-              <h4 class="profile-card-title">{{ card.title }}</h4>
-              <div class="profile-card-content">{{ card.content }}</div>
+    <div v-if="currentTab === 'character'">
+      <div class="search-bar-wrapper">
+        <input
+          v-model="searchText"
+          class="search-bar"
+          type="text"
+          placeholder="搜索角色名：韩立..."
+          @keyup.enter="searchCharacter"
+        />
+        <span class="search-icon" @click="searchCharacter">🔍</span>
+        <span v-if="searchText && searchNoMatch" class="search-hint">未找到相关角色</span>
+      </div>
+      <div class="character-section">
+        <!-- 左侧信息 -->
+        <div class="character-info">
+          <div style="display: flex; align-items: center;">
+            <h2 style="margin-right: 8px;">{{ currentCharacter.name }}</h2>
+            <button class="relation-btn" @click="showRelation = true" title="查看人物关系图谱">
+              <img :src="relationIcon" alt="人物关系图谱" class="relation-icon-svg" />
+            </button>
+          </div>
+          <p class="cv">CV：{{ currentCharacter.cv }}</p>
+          <!-- 横向简介卡片滑动区 -->
+          <div class="profile-cards-wrapper">
+            <div class="profile-cards" ref="profileCards">
+              <div class="profile-card" v-for="(card, idx) in profileCardList" :key="idx">
+                <button class="expand-btn" @click="expandCard(idx)">⤢</button>
+                <h4 class="profile-card-title">{{ card.title }}</h4>
+                <div class="profile-card-content">{{ card.content }}</div>
+              </div>
+            </div>
+          </div>
+          <!-- 横向滚动人物列表 -->
+          <div class="character-list">
+            <div v-for="(char, idx) in characters" :key="char.name" :class="['char-item', {selected: idx === currentIndex}]" @click="selectCharacter(idx)">
+              <img :src="char.avatar" :alt="char.name" />
             </div>
           </div>
         </div>
-        <!-- 横向滚动人物列表 -->
-        <div class="character-list">
-          <div v-for="(char, idx) in characters" :key="char.name" :class="['char-item', {selected: idx === currentIndex}]" @click="selectCharacter(idx)">
-            <img :src="char.avatar" :alt="char.name" />
+        <!-- 右侧形象展示 -->
+        <div class="character-image-section">
+          <img :src="currentCharacter.images[imageIndex]" class="character-image" :alt="currentCharacter.name" />
+          <div class="image-switch-btns">
+            <button v-for="(img, idx) in currentCharacter.images" :key="idx" :class="['img-btn', {active: idx === imageIndex}]" @click="imageIndex = idx">形象{{ idx+1 }}</button>
           </div>
-        </div>
-      </div>
-      <!-- 右侧形象展示 -->
-      <div class="character-image-section">
-        <img :src="currentCharacter.images[imageIndex]" class="character-image" :alt="currentCharacter.name" />
-        <div class="image-switch-btns">
-          <button v-for="(img, idx) in currentCharacter.images" :key="idx" :class="['img-btn', {active: idx === imageIndex}]" @click="imageIndex = idx">形象{{ idx+1 }}</button>
         </div>
       </div>
     </div>
@@ -48,10 +63,22 @@
       </div>
     </div>
     <div v-if="showRelation" class="relation-modal">
-      <div class="relation-mask" @click="showRelation = false"></div>
-      <div class="relation-content">
-        <button class="relation-close-btn" @click="showRelation = false">×</button>
-        <img :src="currentCharacter.relationImg || '/src/images/relation-demo.png'" alt="人物关系图谱" class="relation-img" />
+      <div class="relation-mask" @click="closeRelation"></div>
+      <div class="relation-content"
+        @wheel="onRelationWheel"
+        @mousedown="onRelationMouseDown"
+        style="overflow: hidden;">
+        <button class="relation-close-btn" @click="closeRelation">×</button>
+        <img
+          :src="currentCharacter.relationImg || '/src/images/relation-demo.png'"
+          alt="人物关系图谱"
+          class="relation-img"
+          :style="{
+            transform: `translate(${relationOffset.x}px, ${relationOffset.y}px) scale(${relationScale})`,
+            pointerEvents: dragging ? 'none' : 'auto'
+          }"
+          draggable="false"
+        />
       </div>
     </div>
   </div>
@@ -60,6 +87,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useThemeStore } from '../store/theme'
 import Artifact from './Artifact.vue'
 
 const route = useRoute()
@@ -139,6 +167,16 @@ const currentCharacter = computed(() => characters.value[currentIndex.value])
 function selectCharacter(idx) {
   currentIndex.value = idx
   imageIndex.value = 0
+  // 自动滚动到对应人物头像
+  nextTick(() => {
+    const list = document.querySelector('.character-list')
+    if (list) {
+      const items = list.querySelectorAll('.char-item')
+      if (items[idx]) {
+        items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
+  })
 }
 // 切tab时重置人物
 watch(currentTab, val => {
@@ -164,17 +202,16 @@ const profileCardList = computed(() => [
 ])
 const profileCards = ref(null)
 // 横向滚动支持鼠标滚轮滑动
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-  // 简介卡片横向滚动支持鼠标滚轮滑动和惯性
+function bindScrollInertia() {
   nextTick(() => {
-    const profileCards = document.querySelector('.profile-cards-wrapper')
-    if (profileCards) {
+    // 简介卡片横向滚动
+    const profileCardsWrapper = document.querySelector('.profile-cards-wrapper')
+    if (profileCardsWrapper && !profileCardsWrapper._inertiaBind) {
       let velocity = 0
       let rafId = null
       function animate() {
         if (Math.abs(velocity) > 0.5) {
-          profileCards.scrollLeft += velocity
+          profileCardsWrapper.scrollLeft += velocity
           velocity *= 0.85
           rafId = requestAnimationFrame(animate)
         } else {
@@ -182,17 +219,18 @@ onMounted(() => {
           rafId = null
         }
       }
-      profileCards.addEventListener('wheel', (e) => {
+      profileCardsWrapper.addEventListener('wheel', (e) => {
         if (e.deltaY !== 0) {
           e.preventDefault()
           velocity += e.deltaY * 0.35
           if (!rafId) animate()
         }
       }, { passive: false })
+      profileCardsWrapper._inertiaBind = true
     }
-    // 人物列表横向滚动（惯性逻辑保留）
+    // 人物列表横向滚动
     const list = document.querySelector('.character-list')
-    if (list) {
+    if (list && !list._inertiaBind) {
       let velocity = 0
       let rafId = null
       function animate() {
@@ -212,16 +250,116 @@ onMounted(() => {
           if (!rafId) animate()
         }
       }, { passive: false })
+      list._inertiaBind = true
     }
   })
+}
+
+onMounted(() => {
+  bindScrollInertia()
+})
+watch(currentTab, val => {
+  if (val === 'character') {
+    bindScrollInertia()
+  }
 })
 const expandedCardIdx = ref(null)
 function expandCard(idx) { expandedCardIdx.value = idx }
 function closeExpand() { expandedCardIdx.value = null }
 const showRelation = ref(false)
+const theme = useThemeStore()
+const relationIcon = computed(() =>
+  theme.isDarkMode
+    ? '/src/images/人际关系-白色.svg'
+    : '/src/images/人际关系-灰色.svg'
+)
+const searchText = ref('')
+const searchNoMatch = ref(false)
+function searchCharacter() {
+  const keyword = searchText.value.trim()
+  if (!keyword) {
+    searchNoMatch.value = false
+    return
+  }
+  const idx = characters.value.findIndex(c => c.name.includes(keyword))
+  if (idx !== -1) {
+    selectCharacter(idx)
+    searchNoMatch.value = false
+  } else {
+    searchNoMatch.value = true
+  }
+}
+watch(searchText, val => {
+  if (!val) searchNoMatch.value = false
+})
+const filteredCharacters = computed(() => {
+  if (!searchText.value.trim()) return characters.value
+  return characters.value.filter(c =>
+    c.name.includes(searchText.value.trim()) ||
+    (c.desc && c.desc.includes(searchText.value.trim()))
+  )
+})
+const relationScale = ref(0.7)
+const relationOffset = ref({ x: 0, y: -130 })
+const dragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
+const imgStart = ref({ x: 0, y: 0 })
+
+function onRelationWheel(e) {
+  e.preventDefault()
+  let scale = relationScale.value + (e.deltaY < 0 ? 0.1 : -0.1)
+  scale = Math.max(0.3, Math.min(3, scale))
+  relationScale.value = scale
+}
+function onRelationMouseDown(e) {
+  if (e.button !== 0) return
+  dragging.value = true
+  dragStart.value = { x: e.clientX, y: e.clientY }
+  imgStart.value = { ...relationOffset.value }
+  window.addEventListener('mousemove', onRelationMouseMove)
+  window.addEventListener('mouseup', onRelationMouseUp)
+}
+function onRelationMouseMove(e) {
+  if (!dragging.value) return
+  relationOffset.value = {
+    x: imgStart.value.x + (e.clientX - dragStart.value.x),
+    y: imgStart.value.y + (e.clientY - dragStart.value.y)
+  }
+}
+function onRelationMouseUp() {
+  dragging.value = false
+  window.removeEventListener('mousemove', onRelationMouseMove)
+  window.removeEventListener('mouseup', onRelationMouseUp)
+}
+function closeRelation() {
+  showRelation.value = false
+  relationScale.value = 0.7
+  relationOffset.value = { x: 0, y: -60 }
+}
+watch(showRelation, val => {
+  if (val) {
+    relationScale.value = 0.7
+    relationOffset.value = { x: 0, y: -130 }
+  }
+})
 </script>
 
 <style scoped>
+#web-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: url('/src/images/日照.png') center/cover no-repeat;
+  opacity: 1;
+  transition: opacity 0.3s, background 0.3s;
+}
+body.dark-mode #web-bg {
+  background-image: url('../assets/web-bg1.png');
+  /* 或者和主页保持一致的背景设置 */
+}
 .info-main {
   display: flex;
   justify-content: center;
@@ -589,9 +727,21 @@ body.dark-mode .card-modal-content {
   border-radius: 6px;
   padding: 2px 6px;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
 }
 .relation-btn:hover {
   background: #f3eaff;
+}
+body.dark-mode .relation-btn:hover {
+  background: #3a2e4e !important;
+  /* 可以自定义为更深的色或加边框等 */
+  box-shadow: 0 0 0 2px #bfa7ff;
+}
+.relation-icon-svg {
+  width: 28px;
+  height: 28px;
+  display: block;
 }
 .relation-modal {
   position: fixed;
@@ -623,7 +773,9 @@ body.dark-mode .card-modal-content {
   flex-direction: column;
   align-items: center;
   animation: modal-pop 0.18s cubic-bezier(.5,1.8,.7,1) both;
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
 }
 .relation-close-btn {
   position: absolute;
@@ -643,8 +795,8 @@ body.dark-mode .card-modal-content {
   background: #f3eaff;
 }
 .relation-img {
-  max-width: 85vw;
-  max-height: 72vh;
+  max-width: none;
+  max-height: none;
   width: auto;
   height: auto;
   border-radius: 12px;
@@ -652,5 +804,71 @@ body.dark-mode .card-modal-content {
   margin-top: 12px;
   display: block;
   object-fit: contain;
+  cursor: grab;
+  transition: box-shadow 0.2s;
+}
+.relation-img:active {
+  cursor: grabbing;
+}
+.search-bar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 24px 0;
+  padding: 0 8px;
+}
+.search-bar {
+  width: 260px;
+  height: 38px;
+  border-radius: 20px;
+  border: 1.5px solid #ac97f7;
+  background: #f8f6ff;
+  color: #333;
+  font-size: 1.08rem;
+  padding: 0 40px 0 16px;
+  outline: none;
+  box-shadow: 0 2px 8px #ac97f722;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+.search-bar:focus {
+  border-color: #7e6bc9;
+  background: #f3eaff;
+}
+.search-icon {
+  margin-left: -32px;
+  font-size: 1.2rem;
+  color: #ac97f7;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.search-icon:hover {
+  color: #7e6bc9;
+}
+body.dark-mode .search-bar {
+  background: #2a2238;
+  color: #eee;
+  border: 1.5px solid #bfa7ff;
+  box-shadow: 0 2px 8px #0002;
+}
+body.dark-mode .search-bar:focus {
+  background: #312742;
+  border-color: #bfa7ff;
+}
+body.dark-mode .search-icon {
+  color: #bfa7ff;
+}
+body.dark-mode .search-icon:hover {
+  color: #fff;
+}
+.search-hint {
+  margin-left: 12px;
+  color: #e57373;
+  font-size: 0.98rem;
+  transition: color 0.2s;
+  font-weight: 700;
+}
+body.dark-mode .search-hint {
+  color: #ffb3b3;
 }
 </style>

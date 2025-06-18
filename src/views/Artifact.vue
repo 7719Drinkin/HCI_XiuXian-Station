@@ -1,6 +1,17 @@
 <template>
   <div id="web-bg"></div>
   <div class="artifact-main">
+    <div class="search-bar-wrapper">
+      <input
+        v-model="searchText"
+        class="search-bar"
+        type="text"
+        placeholder="搜索法宝名/简介..."
+        @keyup.enter="searchArtifact"
+      />
+      <span class="search-icon" @click="searchArtifact">🔍</span>
+      <span v-if="searchText && searchNoMatch" class="search-hint">未找到相关法宝</span>
+    </div>
     <div class="character-section">
       <!-- 左侧信息 -->
       <div class="character-info">
@@ -44,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 
 const artifacts = ref([
   {
@@ -85,6 +96,32 @@ const artifacts = ref([
     abilityLong: '青凝镜可映照虚实，探查敌情，破解阵法与禁制，乃修士必备之物。',
     experience: '韩立常用法器。',
     experienceLong: '青凝镜为韩立常用法器，屡次助其洞察敌情，破解重重危机。'
+  },
+  {
+    name: '微光',
+    avatar: '/src/images/青凝镜.png',
+    images: ['/src/images/青凝镜1.png'],
+    type: '法器',
+    desc: '可映照虚实，洞察一切。',
+    background: '古老法器，能映照虚实，洞察隐秘。',
+    backgroundLong: '青凝镜乃古老法器，能映照虚实，洞察一切隐秘，常用于探查敌情与破解阵法。',
+    ability: '映照、探查、破解',
+    abilityLong: '青凝镜可映照虚实，探查敌情，破解阵法与禁制，乃修士必备之物。',
+    experience: '韩立常用法器。',
+    experienceLong: '青凝镜为韩立常用法器，屡次助其洞察敌情，破解重重危机。'
+  },
+  {
+    name: '幻影',
+    avatar: '/src/images/青凝镜.png',
+    images: ['/src/images/青凝镜1.png'],
+    type: '法器',
+    desc: '可映照虚实，洞察一切。',
+    background: '古老法器，能映照虚实，洞察隐秘。',
+    backgroundLong: '青凝镜乃古老法器，能映照虚实，洞察一切隐秘，常用于探查敌情与破解阵法。',
+    ability: '映照、探查、破解',
+    abilityLong: '青凝镜可映照虚实，探查敌情，破解阵法与禁制，乃修士必备之物。',
+    experience: '韩立常用法器。',
+    experienceLong: '青凝镜为韩立常用法器，屡次助其洞察敌情，破解重重危机。'
   }
 ])
 const currentIndex = ref(0)
@@ -93,6 +130,16 @@ const currentArtifact = computed(() => artifacts.value[currentIndex.value])
 function selectArtifact(idx) {
   currentIndex.value = idx
   imageIndex.value = 0
+  // 自动滚动到对应法宝头像
+  nextTick(() => {
+    const list = document.querySelector('.character-list')
+    if (list) {
+      const items = list.querySelectorAll('.char-item')
+      if (items[idx]) {
+        items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
+  })
 }
 const profileCardList = computed(() => [
   { title: '背景', content: currentArtifact.value.background || currentArtifact.value.desc, contentLong: currentArtifact.value.backgroundLong },
@@ -102,6 +149,28 @@ const profileCardList = computed(() => [
 const expandedCardIdx = ref(null)
 function expandCard(idx) { expandedCardIdx.value = idx }
 function closeExpand() { expandedCardIdx.value = null }
+
+const searchText = ref('')
+const searchNoMatch = ref(false)
+function searchArtifact() {
+  const keyword = searchText.value.trim()
+  if (!keyword) {
+    searchNoMatch.value = false
+    return
+  }
+  const idx = artifacts.value.findIndex(a =>
+    a.name.includes(keyword)
+  )
+  if (idx !== -1) {
+    selectArtifact(idx)
+    searchNoMatch.value = false
+  } else {
+    searchNoMatch.value = true
+  }
+}
+watch(searchText, val => {
+  if (!val) searchNoMatch.value = false
+})
 
 onMounted(() => {
   nextTick(() => {
@@ -156,12 +225,90 @@ onMounted(() => {
 </script>
 
 <style scoped>
+#web-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: url('/src/images/日照.png') center/cover no-repeat;
+  opacity: 1;
+  transition: opacity 0.3s, background 0.3s;
+}
+body.dark-mode #web-bg {
+  background-image: url('../assets/web-bg1.png');
+  /* 或者和主页保持一致的背景设置 */
+}
 .artifact-main {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   margin-top: 0px;
   min-height: 70vh;
+}
+.search-bar-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 8px;
+}
+.search-bar {
+  width: 260px;
+  height: 38px;
+  border-radius: 20px;
+  border: 1.5px solid #ac97f7;
+  background: #f8f6ff;
+  color: #333;
+  font-size: 1.08rem;
+  padding: 0 40px 0 16px;
+  outline: none;
+  box-shadow: 0 2px 8px #ac97f722;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+.search-bar:focus {
+  border-color: #7e6bc9;
+  background: #f3eaff;
+}
+.search-icon {
+  margin-left: -32px;
+  font-size: 1.2rem;
+  color: #ac97f7;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.search-icon:hover {
+  color: #7e6bc9;
+}
+.search-hint {
+  margin-left: 12px;
+  color: #e57373;
+  font-size: 0.98rem;
+  transition: color 0.2s;
+  font-weight: 700;
+}
+body.dark-mode .search-bar {
+  background: #2a2238;
+  color: #eee;
+  border: 1.5px solid #bfa7ff;
+  box-shadow: 0 2px 8px #0002;
+}
+body.dark-mode .search-bar:focus {
+  background: #312742;
+  border-color: #bfa7ff;
+}
+body.dark-mode .search-icon {
+  color: #bfa7ff;
+}
+body.dark-mode .search-icon:hover {
+  color: #fff;
+}
+body.dark-mode .search-hint {
+  color: #ffb3b3;
 }
 .character-section {
   display: flex;
@@ -175,6 +322,8 @@ onMounted(() => {
   padding: 32px 24px;
   gap: 40px;
   transition: all 0.3s ease;
+  box-sizing: border-box;
+  align-items: stretch;
 }
 body.dark-mode .character-section {
   background: #312742;
@@ -186,8 +335,10 @@ body.dark-mode .character-section {
   flex-direction: column;
   align-items: flex-start;
   min-width: 260px;
+  max-width: 700px;
   position: relative;
   height: 420px;
+  box-sizing: border-box;
 }
 .character-info h2 {
   font-size: 2rem;
@@ -261,9 +412,10 @@ body.dark-mode .character-info h2 {
   transition: all 0.3s ease;
 }
 body.dark-mode .profile-card {
-  background: #312742;
+  background: #7e5fb3 !important;
   color: #ddd;
-  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+  border: 1px solid #5a4b6e;
+  box-shadow: 0 5px 15px rgba(255,255,255,0.05);
 }
 .expand-btn {
   position: absolute;
@@ -290,17 +442,19 @@ body.dark-mode .profile-card {
   margin-top: 0;
   margin-left: 0;
 }
+body.dark-mode .profile-card-title {
+  color: #bfa7ff;
+}
 .profile-card-content {
   font-size: 0.98rem;
   color: #333;
   word-break: break-all;
   overflow-y: auto;
   flex: 1;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(172,151,247,0.3) transparent;
+  transition: all 0.3s ease;
 }
 body.dark-mode .profile-card-content {
-  color: #ddd;
+  color: #ccc;
 }
 .profile-card-content::-webkit-scrollbar {
   width: 5px;
@@ -383,6 +537,8 @@ body.dark-mode .profile-card-content {
   position: relative;
   height: 420px;
   width: 320px;
+  min-width: 650px;
+  box-sizing: border-box;
 }
 .character-image {
   width: 100%;
@@ -482,7 +638,7 @@ body.dark-mode .card-modal-content {
 .expand-close-btn:hover {
   background: #f3eaff;
 }
-.profile-card-content-large {
+.profile-card-content_large {
   font-size: 1.08rem;
   color: #333;
   margin-top: 10px;
