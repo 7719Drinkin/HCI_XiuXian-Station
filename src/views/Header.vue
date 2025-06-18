@@ -39,6 +39,9 @@
           <button class="func-btn fab fa-github github-icon" @click="goToGithub"></button>
           <button class="func-btn">👤</button>
           <button class="func-btn">🧭</button>
+          <button class="music-btn" :class="{ 'not-playing': !isPlaying, 'playing': isPlaying }" @click="toggleMusic" @mouseenter="isHover = true" @mouseleave="isHover = false">
+            <img :src="musicIcon" alt="音乐" class="music-icon" />
+          </button>
         </div>
         <!-- 右上角展开按钮 -->
         <button class="sidebar-toggle-btn" @click="sidebar.toggle">☰</button>
@@ -54,6 +57,9 @@
         </transition>
       </div>
     </div>
+    <!-- <div class="header-music-btn" @click="toggleMusic">
+      <img :src="musicIcon" alt="音乐" class="header-music-icon" />
+    </div> -->
     
 
 
@@ -61,12 +67,22 @@
 
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useSidebarStore } from '../store/sidebar'
 import { useThemeStore } from '../store/theme'
 
 const sidebar = useSidebarStore()
 const theme = useThemeStore()
+const isAtTop = ref(true)
+const musicIcon = computed(() => {
+  if (isPlaying.value) {
+    if (isAtTop.value) return '/src/images/暂停-白色.png'
+    return theme.isDarkMode ? '/src/images/暂停-白色.png' : '/src/images/暂停-黑色.png'
+  } else {
+    if (isAtTop.value) return '/src/images/播放-白色.png'
+    return theme.isDarkMode ? '/src/images/播放-白色.png' : '/src/images/播放-黑色.png'
+  }
+})
 
 function goToGithub() {
   window.open('https://github.com/7719Drinkin/HCI_Project', '_blank')
@@ -78,12 +94,20 @@ let hideTimer = null
 
 function handleScroll() {
   isScrolled.value = window.scrollY > 0
+  isAtTop.value = window.scrollY === 0
 }
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  handleScroll()
+  audio = new Audio('/src/images/插曲.mp3')
+  audio.loop = true
 })
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  if (audio) {
+    audio.pause()
+    audio = null
+  }
 })
 
 function onInfoNavWrapperEnter() {
@@ -95,6 +119,31 @@ function onInfoNavWrapperLeave() {
     showInfoSubnav.value = false
   }, 200)
 }
+
+const isPlaying = ref(false)
+const isHover = ref(false)
+let audio = null
+onMounted(() => {
+  audio = new Audio('/src/images/插曲.mp3')
+  audio.loop = true
+})
+onBeforeUnmount(() => {
+  if (audio) {
+    audio.pause()
+    audio = null
+  }
+})
+function toggleMusic() {
+  if (!audio) return
+  if (isPlaying.value) {
+    audio.pause()
+    isPlaying.value = false
+  } else {
+    audio.play()
+    isPlaying.value = true
+  }
+}
+const themeIsDark = computed(() => document.body.classList.contains('dark-mode'))
 </script>
 
 <style scoped> 
@@ -405,5 +454,65 @@ body.dark-mode .info-subnav .subnav-item {
 .header.scrolled .nav-item.active {
   background: #ac97f7;
   color: rgba(206, 255, 235, 0.7) !important;
+}
+
+.header-music-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  z-index: 100;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 6px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-music-btn:hover {
+  background: #f3eaff;
+}
+.header-music-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.music-btn {
+  background: none;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  /* margin-left: 8px; */
+  width: 28px;
+  height: 28px;
+  min-width: 36px;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+.music-btn:hover {
+  background: #ac97f7;
+}
+.music-icon {
+  display: block;
+  transition: width 0.2s, height 0.2s;
+}
+.music-btn.not-playing .music-icon {
+  width: 22px;
+  height: 22px;
+}
+.music-btn.playing .music-icon {
+  width: 28px;
+  height: 28px;
+}
+body.dark-mode .music-btn:hover {
+  background: #3a2e4e !important;
 }
 </style>
