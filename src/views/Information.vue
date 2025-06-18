@@ -22,7 +22,12 @@
               <img :src="relationIcon" alt="人物关系图谱" class="relation-icon-svg" />
             </button>
           </div>
-          <p class="cv">CV：{{ currentCharacter.cv }}</p>
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <p class="cv">CV：{{ currentCharacter.cv }}</p>
+            <button class="voice-btn" title="语音试听">
+              <img :src="voiceIcon" alt="语音" class="voice-icon-svg" />
+            </button>
+          </div>
           <!-- 横向简介卡片滑动区 -->
           <div class="profile-cards-wrapper">
             <div class="profile-cards" ref="profileCards">
@@ -272,6 +277,11 @@ const relationIcon = computed(() =>
   theme.isDarkMode
     ? '/src/images/人际关系-白色.svg'
     : '/src/images/人际关系-灰色.svg'
+)
+const voiceIcon = computed(() =>
+  theme.isDarkMode
+    ? '/src/images/语音-白色.svg'
+    : '/src/images/语音-黑色.svg'
 )
 const searchText = ref('')
 const searchNoMatch = ref(false)
@@ -870,5 +880,27 @@ body.dark-mode .search-icon:hover {
 }
 body.dark-mode .search-hint {
   color: #ffb3b3;
+}
+.voice-btn {
+  background: none;
+  border: none;
+  margin-left: 8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+.voice-btn:hover {
+  background: #f3eaff;
+}
+.voice-icon-svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+body.dark-mode .voice-btn:hover {
+  background: #3a2e4e !important;
 }
 </style>

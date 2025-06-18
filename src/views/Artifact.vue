@@ -6,7 +6,7 @@
         v-model="searchText"
         class="search-bar"
         type="text"
-        placeholder="搜索法宝名/简介..."
+        placeholder="搜索法宝名：青凝镜..."
         @keyup.enter="searchArtifact"
       />
       <span class="search-icon" @click="searchArtifact">🔍</span>
