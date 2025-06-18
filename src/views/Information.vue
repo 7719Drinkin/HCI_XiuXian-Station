@@ -6,7 +6,9 @@
       <div class="character-info">
         <div style="display: flex; align-items: center;">
           <h2 style="margin-right: 8px;">{{ currentCharacter.name }}</h2>
-          <button class="relation-btn" @click="showRelation = true" title="查看人物关系图谱">🔗</button>
+          <button class="relation-btn" @click="showRelation = true" title="查看人物关系图谱">
+            <img :src="relationIcon" alt="人物关系图谱" class="relation-icon-svg" />
+          </button>
         </div>
         <p class="cv">CV：{{ currentCharacter.cv }}</p>
         <!-- 横向简介卡片滑动区 -->
@@ -60,6 +62,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useThemeStore } from '../store/theme'
 import Artifact from './Artifact.vue'
 
 const route = useRoute()
@@ -219,6 +222,12 @@ const expandedCardIdx = ref(null)
 function expandCard(idx) { expandedCardIdx.value = idx }
 function closeExpand() { expandedCardIdx.value = null }
 const showRelation = ref(false)
+const theme = useThemeStore()
+const relationIcon = computed(() =>
+  theme.isDarkMode
+    ? '/src/images/人际关系-白色.svg'
+    : '/src/images/人际关系-灰色.svg'
+)
 </script>
 
 <style scoped>
@@ -589,9 +598,21 @@ body.dark-mode .card-modal-content {
   border-radius: 6px;
   padding: 2px 6px;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
 }
 .relation-btn:hover {
   background: #f3eaff;
+}
+body.dark-mode .relation-btn:hover {
+  background: #3a2e4e !important;
+  /* 可以自定义为更深的色或加边框等 */
+  box-shadow: 0 0 0 2px #bfa7ff;
+}
+.relation-icon-svg {
+  width: 28px;
+  height: 28px;
+  display: block;
 }
 .relation-modal {
   position: fixed;
